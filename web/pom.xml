@@ -1,0 +1,281 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.kildeen</groupId>
+		<version>1.0-SNAPSHOT</version>
+		<artifactId>ref2</artifactId>
+	</parent>
+
+	<artifactId>ref2-web</artifactId>
+	<packaging>war</packaging>
+	<name>ref2 web</name>
+
+	<properties>
+		<project.theme.name>default</project.theme.name>
+		
+		<project.resources.home.folder>
+			${project.basedir}/src/main/webapp/resources/
+		</project.resources.home.folder>
+		
+		<project.resources.build.folder>
+			${project.build.directory}/temp-resources/mp/
+		</project.resources.build.folder>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.kildeen</groupId>
+			<artifactId>ref2-core</artifactId>
+		</dependency>
+
+	<!--	<dependency>
+			<groupId>com.kildeen</groupId>
+			<artifactId>ref2-domain</artifactId>
+			<type>test-jar</type>
+			<scope>test</scope>
+		</dependency> -->
+
+		<dependency>
+			<groupId>org.apache.myfaces.core</groupId>
+			<artifactId>myfaces-api</artifactId>
+			<version>${myfaces.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
+			<version>${primefaces.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.primefaces.themes</groupId>
+			<artifactId>all-themes</artifactId>
+			<version>${primefaces.themes.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.omnifaces</groupId>
+			<artifactId>omnifaces</artifactId>
+			<version>${omnifaces.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.deltaspike.modules</groupId>
+			<artifactId>deltaspike-jsf-module-api</artifactId>
+			<version>${ds.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.deltaspike.modules</groupId>
+			<artifactId>deltaspike-jsf-module-impl</artifactId>
+			<version>${ds.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.deltaspike.modules</groupId>
+			<artifactId>deltaspike-security-module-impl</artifactId>
+			<version>${ds.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.deltaspike.modules</groupId>
+			<artifactId>deltaspike-security-module-api</artifactId>
+			<version>${ds.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.deltaspike.modules</groupId>
+			<artifactId>deltaspike-servlet-module-api</artifactId>
+			<version>${ds.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.deltaspike.modules</groupId>
+			<artifactId>deltaspike-servlet-module-impl</artifactId>
+			<version>${ds.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.sirona</groupId>
+			<artifactId>sirona-core</artifactId>
+			<version>${sirona.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.sirona</groupId>
+			<artifactId>sirona-reporting</artifactId>
+			<version>0.2-incubating</version>
+			<classifier>classes</classifier>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.sirona</groupId>
+			<artifactId>sirona-web</artifactId>
+			<version>${sirona.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.sirona</groupId>
+			<artifactId>sirona-cdi</artifactId>
+			<version>${sirona.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.sirona</groupId>
+			<artifactId>sirona-jpa</artifactId>
+			<version>${sirona.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.sirona</groupId>
+			<artifactId>sirona-hazelcast-gui</artifactId>
+			<version>${sirona.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>font-awesome</artifactId>
+			<version>${font-awesome.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>jquery.lazyload</artifactId>
+			<version>${jquery-lazyload.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.myfaces.core</groupId>
+			<artifactId>myfaces-impl</artifactId>
+			<version>${myfaces.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.myfaces.core</groupId>
+			<artifactId>myfaces-impl-test</artifactId>
+			<version>${myfaces.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.myfaces.test</groupId>
+			<artifactId>myfaces-test22</artifactId>
+			<version>1.0.7</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.3</version>
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+					<warSourceDirectory>${project.basedir}/src/main/webapp</warSourceDirectory>
+					<warSourceExcludes>**/*.css</warSourceExcludes>
+					<!-- <warSourceExcludes>**/*.css, **/*.js</warSourceExcludes> -->
+				</configuration>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.openejb.maven</groupId>
+				<artifactId>tomee-maven-plugin</artifactId>
+				<version>${tomee.version}</version>
+				<configuration>
+					<tomeeClassifier>plus</tomeeClassifier>
+					<context>ROOT</context>
+					<removeDefaultWebapps>false</removeDefaultWebapps>
+					<systemVariables>
+						<faces.PROJECT_STAGE>Development</faces.PROJECT_STAGE>
+					</systemVariables>
+					<reloadOnUpdate>false</reloadOnUpdate>
+					<synchronization>
+						<updateInterval>1</updateInterval>
+						<extensions>
+							<updateOnlyExtension>.xhtml</updateOnlyExtension>
+							<updateOnlyExtension>.js</updateOnlyExtension>
+							<updateOnlyExtension>.css</updateOnlyExtension>
+						</extensions>
+					</synchronization>
+
+					<args>-Xdebug
+						-Xrunjdwp:transport=dt_socket,address=5005,suspend=n,server=y</args>
+
+					<webapps>
+					</webapps>
+
+					<libs>
+						<lib>${database.driver}</lib>
+						<!-- <lib>${prod.driver}</lib> -->
+						<lib>${p6spy.driver}</lib>
+						<lib>remove:myfaces-api-${tomee.remove.myfaces.version}</lib>
+						<lib>remove:myfaces-impl-${tomee.remove.myfaces.version}</lib>
+						<lib>org.apache.commons:commons-collections4:4.0</lib>
+						<lib>org.apache.myfaces.core:myfaces-api:${myfaces.version}</lib>
+						<lib>org.apache.myfaces.core:myfaces-impl:${myfaces.version}</lib>
+						<lib>org.eclipse.persistence:eclipselink:${eclipselink.version}</lib>
+						<lib>de.odysseus.juel:juel-api:${juel.version}</lib>
+						<lib>de.odysseus.juel:juel-impl:${juel.version}</lib>
+					</libs>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<version>2.9</version>
+				<configuration>
+					<wtpversion>2.0</wtpversion>
+					<additionalProjectFacets>
+						<jst.jsf>2.2</jst.jsf>
+						<jst.web>3.0</jst.web>
+					</additionalProjectFacets>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.5</version>
+				<executions>
+					<execution>
+						<id>copy-resources</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.resources.build.folder}/</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${project.resources.home.folder}</directory>
+									<filtering>true</filtering>
+									<includes>
+										<include>**/*.css</include>
+										<include>**/*.js</include>
+									</includes>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+		
+		</plugins>
+	</build>
+</project>

@@ -1,0 +1,189 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.kildeen</groupId>
+		<version>1.0-SNAPSHOT</version>
+		<artifactId>ref2</artifactId>
+	</parent>
+	<artifactId>ref2-core</artifactId>
+	<packaging>jar</packaging>
+	<name>ref2 core</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<maven.build.timestamp.format>yyyy-MM-dd HH.mm</maven.build.timestamp.format>
+		<buildDate>${maven.build.timestamp}</buildDate>
+	</properties>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>com.kildeen</groupId>
+			<artifactId>ref2-domain</artifactId>
+		</dependency>
+
+	<!--	<dependency>
+			<groupId>com.kildeen</groupId>
+			<artifactId>ref2-domain</artifactId>
+			<type>test-jar</type>
+			<scope>test</scope>
+		</dependency> -->
+
+		<dependency>
+			<groupId>org.apache.solr</groupId>
+			<artifactId>solr-solrj</artifactId>
+			<version>${solrj.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.deltaspike.modules</groupId>
+			<artifactId>deltaspike-jpa-module-api</artifactId>
+			<version>${ds.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.deltaspike.modules</groupId>
+			<artifactId>deltaspike-jpa-module-impl</artifactId>
+			<version>${ds.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.deltaspike.modules</groupId>
+			<artifactId>deltaspike-data-module-api</artifactId>
+			<version>${ds.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.deltaspike.modules</groupId>
+			<artifactId>deltaspike-data-module-impl</artifactId>
+			<version>${ds.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.deltaspike.cdictrl</groupId>
+			<artifactId>deltaspike-cdictrl-api</artifactId>
+			<version>${ds.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.deltaspike.cdictrl</groupId>
+			<artifactId>deltaspike-cdictrl-openejb</artifactId>
+			<version>${ds.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.cache</groupId>
+			<artifactId>cache-api</artifactId>
+			<version>${jcache-api.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.liquibase</groupId>
+			<artifactId>liquibase-core</artifactId>
+			<version>${liquibase.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.geronimo.specs</groupId>
+			<artifactId>geronimo-jbatch_1.0_spec</artifactId>
+			<version>${jbatch-api.version}</version>
+			<scope>compile</scope>
+			<!-- this JSR spec API is not yet provided in our EE6 containers -->
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.batchee</groupId>
+			<artifactId>batchee-jbatch</artifactId>
+			<version>${batchee.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.batchee</groupId>
+			<artifactId>batchee-extras</artifactId>
+			<version>${batchee.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.batchee</groupId>
+			<artifactId>batchee-jsefa</artifactId>
+			<version>${batchee.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.batchee</groupId>
+			<artifactId>batchee-cdi</artifactId>
+			<version>${batchee.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.batchee</groupId>
+			<artifactId>batchee-ee6</artifactId>
+			<version>${batchee.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.openejb</groupId>
+			<artifactId>openejb-junit</artifactId>
+			<version>${openejb.version}</version>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-jdk14</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.7</version>
+		</dependency>
+		<dependency>
+			<groupId>com.lowagie</groupId>
+			<artifactId>itext</artifactId>
+			<version>2.1.7</version>
+			<exclusions>
+				<exclusion>
+					<groupId>bouncycastle</groupId>
+					<artifactId>bcmail-jdk14</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>bouncycastle</groupId>
+					<artifactId>bcprov-jdk14</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.bouncycastle</groupId>
+					<artifactId>bctsp-jdk14</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>com.hazelcast</groupId>
+			<artifactId>hazelcast</artifactId>
+			<version>3.4</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.cache</groupId>
+			<artifactId>cache-api</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+
+<!-- 		<dependency>
+			<groupId>org.apache.sirona</groupId>
+			<artifactId>sirona-jta</artifactId>
+			<version>${sirona.version}</version>
+		</dependency> -->
+	</dependencies>
+	<build>
+		<plugins>
+
+		</plugins>
+	</build>
+
+</project>
