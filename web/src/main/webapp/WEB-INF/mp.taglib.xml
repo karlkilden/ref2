@@ -1,0 +1,26 @@
+<facelet-taglib version="2.2"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facelettaglibrary_2_2.xsd">
+	<namespace>http://raindance.se/mp</namespace>
+	<tag>
+		<tag-name>mpNumberConverter</tag-name>
+		<converter>
+			<converter-id>mpNumberConverter</converter-id>
+		</converter>
+		<attribute>
+			<name>maxFraction</name>
+		</attribute>
+		<attribute>
+			<name>minFraction</name>
+		</attribute>
+		<attribute>
+			<name>ifZero</name>
+		</attribute>
+		<attribute>
+			<name>ifNull</name>
+		</attribute>
+		<attribute>
+			<name>type</name>
+		</attribute>
+	</tag>
+</facelet-taglib>

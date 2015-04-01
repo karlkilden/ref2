@@ -1,0 +1,14 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:o="http://omnifaces.org/ui">
+	<div class="row" style="min-height: 220px">
+		<ui:repeat var="cat" value="#{categoryBean.latestCategories}">
+			<div class="col-md-4">
+				<h2>#{cat.name}</h2>
+				<p>#{cat.description}</p>
+			</div>
+		</ui:repeat>
+	</div>
+
+
+
+</ui:composition>

@@ -36,6 +36,7 @@
 		<primefaces.themes.version>1.0.10</primefaces.themes.version>
 		<omnifaces.version>2.0</omnifaces.version>
 		<font-awesome.version>4.2.0</font-awesome.version>
+		<history-js.version>1.8.0</history-js.version>
 		<jquery-lazyload.version>1.9.3</jquery-lazyload.version>
 		<juel.version>2.2.7</juel.version>
 

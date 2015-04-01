@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<Resource id="ref2" type="DataSource">
+
+		<!--#PostgresSQL -->
+		JdbcDriver org.postgresql.Driver
+		JdbcUrl jdbc:postgresql://127.0.0.1:5432/ref2
+		UserName postgres
+		Password postgres
+		JtaManaged true
+		jmxEnabled true
+	</Resource>
+
+
+	<!--<Resource id="MySQL Database" type="DataSource"> -->
+	<!--# MySQL example -->
+	<!--# -->
+	<!--# This connector will not work until you download the driver at: -->
+	<!--# http://www.mysql.com/downloads/api-jdbc-stable.html -->
+
+	<!--JdbcDriver com.mysql.jdbc.Driver -->
+	<!--JdbcUrl jdbc:mysql://localhost/ref -->
+	<!--UserName root -->
+	<!--Password 1111 -->
+	<!--JtaManaged true -->
+	<!--</Resource> -->
+</resources>

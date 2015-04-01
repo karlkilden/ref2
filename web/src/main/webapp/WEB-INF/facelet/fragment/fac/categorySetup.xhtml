@@ -1,0 +1,22 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:o="http://omnifaces.org/ui"
+	 template="/WEB-INF/facelet/template/template.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="unitID" value="#{unitSetupController.unitID}" />
+	</f:metadata>
+
+	<ui:define name="body-content">
+		<h:inputText value="#{unitSetupController.mu}" />
+		<h:commandButton value="asdf" action="#{unitSetupController.muuu}" />
+	</ui:define>
+
+	<ui:define name="control-content">
+		<h:panelGroup id="panel">
+			<r:commandButton id="save-button" value="#{messages.save}" action="#{unitSetupController.saveUnit()}" icon="fa-save"
+				disabled="#{unitSetupController.customer == null}">
+				<f:ajax execute=":form-content:panel-group" />
+			</r:commandButton>
+		</h:panelGroup>
+	</ui:define>
+</ui:composition>
