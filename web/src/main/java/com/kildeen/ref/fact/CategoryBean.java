@@ -5,19 +5,13 @@ import static java.util.stream.IntStream.iterate;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.IntStream;
 
-import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 
 import org.apache.http.message.BasicNameValuePair;
-import org.omnifaces.cdi.Param;
 
-import com.google.common.base.MoreObjects;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
+import com.kildeen.ref.BooleanParam;
 import com.kildeen.ref.JsfRequestContext;
 
 @Model
@@ -32,7 +26,7 @@ public class CategoryBean {
 	private JsfRequestContext jsfRequestContext;
 
 	@Inject
-	@Param
+	@BooleanParam
 	private Boolean morePages;
 
 	private List<Category> latestCategories;
@@ -46,11 +40,6 @@ public class CategoryBean {
 		categoryService.save(category);
 		page = jsfRequestContext.getPage();
 		setup();
-	}
-
-	@PostConstruct
-	private void init() {
-		morePages = MoreObjects.firstNonNull(morePages, false);
 	}
 
 	public void morePages() {
@@ -69,6 +58,9 @@ public class CategoryBean {
 
 	public void setup() {
 		latestCategories = categoryService.fetchLatestCategories(page, MAX_PAGES);
+		if (morePages) {
+			morePages();
+		}
 	}
 
 	public List<Category> getLatestCategories() {

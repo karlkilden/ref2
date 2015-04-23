@@ -1,6 +1,7 @@
 package com.kildeen.ref;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
 import javax.faces.component.UIData;
@@ -61,7 +62,7 @@ public class JsfRequestContext {
 		return FacesLocal.getFlash(facesContext);
 	}
 
-	public void addParams(NameValuePair... params) {
+	public void addParams(List<NameValuePair> params) {
 		String viewId = getViewId().substring(0, getViewId().indexOf("."));
 		requestParamAppender.append(FacesLocal.getRequest(facesContext).getContextPath() + viewId, params);
 	}
@@ -105,6 +106,11 @@ public class JsfRequestContext {
 	public BasicNameValuePair incrementAndGetPage() {
 		int page = getPage()+1;
 		return getPageParam(page+1);
+	}
+
+	public void addParams(BasicNameValuePair basicNameValuePair, BasicNameValuePair basicNameValuePair2, BasicNameValuePair pageParam) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

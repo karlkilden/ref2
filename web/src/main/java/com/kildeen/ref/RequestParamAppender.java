@@ -1,6 +1,7 @@
 package com.kildeen.ref;
 
 import java.net.URISyntaxException;
+import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
 
@@ -14,17 +15,21 @@ public class RequestParamAppender {
 
 	private static final String PUSH_STATE = "History.pushState(null, null, '%s');";
 
-	public void append (String currentPage, NameValuePair... params) {
+	public void append (String currentPage, List<NameValuePair> params) {
     	URIBuilder builder = new URIBuilder();
-    	builder.setParameter("test", "   ");
     	builder.setParameters(params);
     	builder.setPath(currentPage);
-		try {
-			Ajax.oncomplete(String.format(PUSH_STATE, builder.build()));
-		} catch (URISyntaxException e) {
-			ExceptionUtils.throwAsRuntimeException(e);
-		}
+//		try {
+////			Ajax.oncomplete(String.format(PUSH_STATE, builder.build()));
+//		} catch (URISyntaxException e) {
+//			ExceptionUtils.throwAsRuntimeException(e);
+//		}
 
+	}
+
+	public void append(String currentPage, List<NameValuePair>[] params) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

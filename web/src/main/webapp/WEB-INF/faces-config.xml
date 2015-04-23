@@ -20,4 +20,8 @@
 
 	</application>
 
+	<lifecycle>
+		<phase-listener>com.kildeen.ref.MyPhaseListener</phase-listener>
+	</lifecycle>
+
 </faces-config>
