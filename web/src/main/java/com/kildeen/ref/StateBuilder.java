@@ -4,18 +4,11 @@ import static liquibase.util.StringUtils.lowerCaseFirst;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 
 import org.apache.deltaspike.core.util.ReflectionUtils;
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
 import org.omnifaces.util.Faces;
 
 @ViewScoped

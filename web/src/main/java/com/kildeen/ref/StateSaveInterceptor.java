@@ -11,8 +11,6 @@ import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
 
-import org.apache.deltaspike.core.api.provider.BeanProvider;
-
 import liquibase.util.StringUtils;
 
 @Interceptor

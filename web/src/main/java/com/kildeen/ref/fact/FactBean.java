@@ -6,8 +6,6 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 
-import org.apache.http.message.BasicNameValuePair;
-
 import com.kildeen.ref.JsfRequestContext;
 
 @Model

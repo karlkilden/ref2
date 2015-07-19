@@ -1,4 +1,4 @@
-package com.kildeen.ref;
+package com.kildeen.gv;
 
 import javax.xml.bind.annotation.XmlRootElement;
 

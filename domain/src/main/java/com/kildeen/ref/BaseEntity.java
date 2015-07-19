@@ -11,10 +11,12 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
+import javax.validation.constraints.NotNull;
+
+import org.apache.bval.constraints.NotEmpty;
 
 /**
  * @author Karl Kilden
@@ -23,27 +25,40 @@ import javax.persistence.Version;
 @MappedSuperclass
 public class BaseEntity implements Serializable {
 
+	public static final String GVSEQ = "gvseq";
+
 	private static final long serialVersionUID = 1L;
 
 	@Version
 	private long version;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ref2_seq")
-	@SequenceGenerator(name = "ref2_seq", sequenceName = "ref2_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected long id;
-	
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "updated_at")
-    private Date updatedAt;
 
-    private transient Date loadTime;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "updated")
+	private Date updated;
 
-    @PreUpdate
-    @PrePersist
-    protected void onUpdate() {
-        updatedAt = new Date();
-    }
+	@NotNull
+	@NotEmpty
+	protected String name;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	private transient Date loadTime;
+
+	@PreUpdate
+	@PrePersist
+	protected void onUpdate() {
+		updated = new Date();
+	}
 
 	public long getVersion() {
 		return version;
@@ -92,8 +107,4 @@ public class BaseEntity implements Serializable {
 		return equal;
 	}
 
-	public void copyIdentity(BaseEntity other) {
-		this.id = other.getId();
-		this.version = other.getVersion();
-	}
 }

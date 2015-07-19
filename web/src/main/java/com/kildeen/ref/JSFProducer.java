@@ -4,10 +4,8 @@ import java.io.Serializable;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
-import javax.enterprise.event.Event;
 import javax.enterprise.inject.Produces;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
 
 /**
 

@@ -4,7 +4,7 @@
 
 		<!--#PostgresSQL -->
 		JdbcDriver org.postgresql.Driver
-		JdbcUrl jdbc:postgresql://127.0.0.1:5432/ref2
+		JdbcUrl jdbc:postgresql://127.0.0.1:5432/ref4
 		UserName postgres
 		Password postgres
 		JtaManaged true

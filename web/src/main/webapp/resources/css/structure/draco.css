@@ -20,3 +20,13 @@ body {
     display: -ms-flexbox;
     display: flex;
 }
+
+.table-hover>tbody>tr:hover>td, .table-hover>tbody>tr:hover>th {
+	background-color: #7a779f;
+	color: #eeeeee;
+	cursor: pointer;
+}
+
+.table-hover {
+	
+}

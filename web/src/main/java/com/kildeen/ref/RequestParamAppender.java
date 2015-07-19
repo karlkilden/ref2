@@ -1,14 +1,11 @@
 package com.kildeen.ref;
 
-import java.net.URISyntaxException;
 import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
 
-import org.apache.deltaspike.core.util.ExceptionUtils;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URIBuilder;
-import org.omnifaces.util.Ajax;
 
 @RequestScoped
 public class RequestParamAppender {

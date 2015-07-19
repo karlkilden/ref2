@@ -6,9 +6,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import org.apache.deltaspike.data.api.MaxResults;
-
-import com.kildeen.ref.Service;
+import com.kildeen.gv.Service;
 
 @Service
 public class CategoryService {

@@ -19,11 +19,11 @@
 
 		<!-- Core ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
-		<ds.version>1.2.1</ds.version>
+		<ds.version>1.4.0</ds.version>
 		<tomee.version>1.7.1</tomee.version>
 		<eclipselink.version>2.6.0-M3</eclipselink.version>
 		<batchee.version>0.2-incubating</batchee.version>
-		<solrj.version>5.0.0</solrj.version>
+		<solrj.version>5.2.1</solrj.version>
 		<bval.version>0.5</bval.version>
 		<jbatch-api.version>1.0</jbatch-api.version>
 		<liquibase.version>3.2.2</liquibase.version>

@@ -1,9 +1,6 @@
 package com.kildeen.ref;
 
-import static liquibase.util.StringUtils.lowerCaseFirst;
-
 import java.io.Serializable;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -14,7 +11,6 @@ import javax.inject.Inject;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
-import org.omnifaces.util.Faces;
 @ViewScoped
 public class StateKeeper implements Serializable {
 	@Inject

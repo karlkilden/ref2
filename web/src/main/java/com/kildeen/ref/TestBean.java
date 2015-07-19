@@ -1,17 +1,14 @@
 package com.kildeen.ref;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.inject.Model;
 import javax.faces.view.ViewScoped;
+import javax.json.Json;
 
-import org.apache.deltaspike.core.api.config.view.ViewRef;
-import org.apache.deltaspike.core.api.config.view.controller.PreRenderView;
+import org.omnifaces.util.Faces;
 
-import com.kildeen.ref.nav.F;
-
-@ViewRef(config = { F.Cat.Category.class })
 @ViewScoped
 @State
 public class TestBean implements Serializable {
@@ -19,6 +16,7 @@ public class TestBean implements Serializable {
 	private String test;
 
 	public String getTest() {
+		
 		return test;
 	}
 
@@ -29,6 +27,10 @@ public class TestBean implements Serializable {
 	@State
 	public void testSave() {
 	System.out.println("keso");	
+	}
+	
+	public void download() throws IOException {
+		Faces.sendFile("tjenare".getBytes(), "hi", true);
 	}
 	
 	@PostConstruct

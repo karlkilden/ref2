@@ -2,7 +2,7 @@ package com.kildeen.ref.fact;
 
 import javax.inject.Inject;
 
-import com.kildeen.ref.Service;
+import com.kildeen.gv.Service;
 
 @Service
 public class FactService {
