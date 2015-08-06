@@ -24,7 +24,7 @@ public class PollService {
 	public Poll save(Poll poll) {
 		return repo.save(poll);
 	}
-	
+
 	@SolrResult
 	public Poll create(String name, String question, boolean meta) {
 		Poll p = new Poll();
@@ -32,7 +32,7 @@ public class PollService {
 		p.setQuestion(question);
 		p.setMeta(meta);
 		return repo.save(p);
-		
+
 	}
 
 	public Poll fetch(Poll poll) {
@@ -42,7 +42,7 @@ public class PollService {
 	public List<Poll> fetchAll() {
 		return repo.fetchAll();
 	}
-	
+
 	public List<Poll> fetchMeta() {
 		return repo.fetchAllMeta();
 	}
@@ -62,7 +62,5 @@ public class PollService {
 		return solrDAO.query(q, PollDTO.class).getBeans(PollDTO.class);
 
 	}
-	
-
 
 }

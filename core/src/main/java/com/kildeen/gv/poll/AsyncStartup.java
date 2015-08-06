@@ -1,22 +1,25 @@
-package com.kildeen.gv;
+package com.kildeen.gv.poll;
 
 import javax.ejb.Asynchronous;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import com.kildeen.gv.poll.PollService;
+import com.kildeen.gv.SolrMapper;
 
 @Stateless
 @Asynchronous
-public class AsyncPollService {
+public class AsyncStartup {
 
 	@Inject
 	private PollService pollService;
+	@Inject
+	private VoteService voteService;
 
 	@Inject
 	SolrMapper solrMapper;
 
 	public void postAll() {
 		solrMapper.queue(pollService.fetchAll());
+		solrMapper.queue(voteService.fetchAll());
 	}
 }

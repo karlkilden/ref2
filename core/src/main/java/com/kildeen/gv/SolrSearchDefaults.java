@@ -4,10 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.solr.client.solrj.SolrQuery;
-import org.apache.solr.common.params.DisMaxParams;
 
 import com.kildeen.gv.poll.PollDTO;
-import com.kildeen.ref.BaseEntity;
 
 public class SolrSearchDefaults {
 
@@ -15,7 +13,6 @@ public class SolrSearchDefaults {
 
 	private SolrSearchDefaults() {
 
-		
 	}
 
 	private static Map<Class<?>, SolrQuery> setupDefaults() {

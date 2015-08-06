@@ -10,7 +10,7 @@ import org.apache.bval.constraints.NotEmpty;
 import com.kildeen.ref.BaseEntity;
 
 @Entity
-//@SequenceGenerator(name = BaseEntity.GVSEQ, sequenceName = "poll_seq")
+// @SequenceGenerator(name = BaseEntity.GVSEQ, sequenceName = "poll_seq")
 public class Poll extends BaseEntity {
 
 	@NotEmpty
@@ -18,11 +18,11 @@ public class Poll extends BaseEntity {
 	private String question;
 	private String explain;
 	private String link;
-	
+
 	private boolean meta;
 
 	private List<Poll> tags;
-	
+
 	public String getQuestion() {
 		return question;
 	}
@@ -62,6 +62,5 @@ public class Poll extends BaseEntity {
 	public void setMeta(boolean meta) {
 		this.meta = meta;
 	}
-
 
 }

@@ -9,8 +9,6 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
-import org.apache.commons.collections4.CollectionUtils;
-
 import com.kildeen.gv.poll.PollDTO;
 import com.kildeen.gv.poll.VoteDTO;
 import com.kildeen.gv.vote.Poll;
@@ -19,29 +17,36 @@ import com.kildeen.gv.vote.Vote;
 @ApplicationScoped
 public class SolrMapper {
 
-	@Inject
-	SolrPostQueue solrPostQueue;
+	private static final int ENTITY_MAPPER_COUNT = 2;
 
-	private Map<Class<?>, Function<Object, Object>> dtoMapper = new HashMap<>();
+	@Inject
+	private SolrPostQueue solrPostQueue;
+
+	private Map<Class<?>, Function<Object, Object>> dtoMapper = new HashMap<>(ENTITY_MAPPER_COUNT);
 
 	@PostConstruct
-	private void init() {
+	void init() {
 		dtoMapper.put(Poll.class, PollDTO::get);
 		dtoMapper.put(Vote.class, VoteDTO::get);
 	}
 
-	public void queue(Object methodResult) {
-		if (Collection.class.isAssignableFrom(methodResult.getClass())) {
+	public void queue(Object entityReturnValue) {
+
+		if (entityReturnValue == null) {
+			return;
+		}
+
+		if (Collection.class.isAssignableFrom(entityReturnValue.getClass())) {
 			@SuppressWarnings("rawtypes")
-			Collection col = (Collection) methodResult;
-			if (CollectionUtils.isNotEmpty(col)) {
+			Collection col = (Collection) entityReturnValue;
+			if (!col.isEmpty()) {
 				Function<Object, Object> mapper = dtoMapper.get(col.stream().findAny().get().getClass());
 				for (Object entity : col) {
 					queue(entity, mapper);
 				}
 			}
 		} else {
-			queue(methodResult, dtoMapper.get(methodResult.getClass()));
+			queue(entityReturnValue, dtoMapper.get(entityReturnValue.getClass()));
 		}
 	}
 

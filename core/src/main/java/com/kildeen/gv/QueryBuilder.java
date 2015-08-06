@@ -1,6 +1,5 @@
 package com.kildeen.gv;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.solr.client.solrj.SolrQuery;
 
 public class QueryBuilder {

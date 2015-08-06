@@ -5,7 +5,6 @@ import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
-import javax.json.Json;
 
 import org.omnifaces.util.Faces;
 

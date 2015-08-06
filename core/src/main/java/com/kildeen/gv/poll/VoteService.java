@@ -56,4 +56,8 @@ public class VoteService {
 
 	}
 
+	public List<Vote> fetchAll() {
+		 return repo.findAll();
+	}
+
 }

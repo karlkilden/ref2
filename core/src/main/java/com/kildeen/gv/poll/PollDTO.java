@@ -1,6 +1,7 @@
 package com.kildeen.gv.poll;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -9,8 +10,10 @@ import org.apache.bval.constraints.NotEmpty;
 import org.apache.solr.client.solrj.beans.Field;
 
 import com.kildeen.gv.vote.Poll;
+
 @XmlRootElement
 public class PollDTO {
+
 	public static final String ID_TYPE = "poll";
 
 	public static final String NAME = "name";
@@ -25,10 +28,10 @@ public class PollDTO {
 
 	@Field(DATABASE_ID)
 	private long databaseId;
-	
+
 	@Field(value = ID)
 	private String id;
-	
+
 	@NotEmpty
 	@NotNull
 	@Field(value = NAME)
@@ -49,12 +52,10 @@ public class PollDTO {
 	public static PollDTO get(Object poll) {
 		return new PollDTO((Poll) poll);
 	}
-	
+
 	public PollDTO() {
 
 	}
-	
-
 
 	public PollDTO(Poll poll) {
 		this.databaseId = poll.getId();
@@ -128,6 +129,25 @@ public class PollDTO {
 
 	public void setDatabaseId(long databaseId) {
 		this.databaseId = databaseId;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(databaseId);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PollDTO other = (PollDTO) obj;
+		if (databaseId != other.databaseId)
+			return false;
+		return true;
 	}
 
 }
