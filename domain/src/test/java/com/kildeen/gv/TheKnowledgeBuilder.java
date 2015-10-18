@@ -9,6 +9,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Supplier;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.RandomUtils;
+
 import com.google.common.collect.Lists;
 import com.kildeen.gv.auth.User;
 import com.kildeen.gv.vote.AnswerType;
@@ -25,20 +28,23 @@ public class TheKnowledgeBuilder {
 
 	private TheKnowledge theKnowledge = new TheKnowledge();
 
+	private List<Class<? extends BaseEntity>> generateIdsFor;
+
+	private List<Class<? extends BaseEntity>> activatedEntities;
+
 	/**
 	 * This is a key part. This constructor directly tracks the entity
 	 * dependency graph and also maps entity types to init methods
 	 */
 	private TheKnowledgeBuilder() {
-		
+
 		setupEntity(Poll.class, this::polls);
 		setupEntity(Vote.class, this::votes, Poll.class, User.class);
 		setupEntity(User.class, this::users, Poll.class);
 	}
 
 	@SafeVarargs
-	private final void setupEntity(Class<? extends BaseEntity> key, Supplier<Boolean> setupMethod,
-			Class<? extends BaseEntity>... currenPrerequisites) {
+	private final void setupEntity(Class<? extends BaseEntity> key, Supplier<Boolean> setupMethod, Class<? extends BaseEntity>... currenPrerequisites) {
 		List<Class<? extends BaseEntity>> fullPrerequisites = new ArrayList<>();
 		for (Class<? extends BaseEntity> clazz : currenPrerequisites) {
 			fullPrerequisites.add(clazz);
@@ -52,16 +58,24 @@ public class TheKnowledgeBuilder {
 		theKnowledge.beer = entityDecorator.pollDecorator.apply(PollBuilder.getInstance().name("beer").build());
 		theKnowledge.milk = entityDecorator.pollDecorator.apply(PollBuilder.getInstance().name("food").build());
 		theKnowledge.beverages = Lists.newArrayList(theKnowledge.beer, theKnowledge.milk);
+		theKnowledge.polls = new ArrayList<>();
+		theKnowledge.polls.addAll(theKnowledge.beverages);
 		return false;
 	}
+
 	private boolean users() {
 		theKnowledge.kk = entityDecorator.userDecorator.apply(UserBuilder.getInstance().name("kalle").build());
+		theKnowledge.users = Lists.newArrayList(theKnowledge.kk);
 		return false;
 	}
 
 	private boolean votes() {
 		theKnowledge.beerYes = entityDecorator.voteDecorator.apply(VoteBuilder.getInstance().poll(theKnowledge.beer).answer(AnswerType.YES)
 				.addPoints().user(theKnowledge.kk).build());
+		theKnowledge.beverageVotes = Lists.newArrayList(theKnowledge.beerYes);
+		theKnowledge.votes = new ArrayList<>();
+		theKnowledge.votes.addAll(theKnowledge.beverageVotes);
+
 		return false;
 	}
 
@@ -84,6 +98,7 @@ public class TheKnowledgeBuilder {
 	 * 
 	 */
 	public TheKnowledgeBuilder with(List<Class<? extends BaseEntity>> entities) {
+		this.activatedEntities = entities;
 		Set<Class<? extends BaseEntity>> alreadyInitiated = new HashSet<>();
 		for (Class<? extends BaseEntity> s : entities) {
 			List<Class<? extends BaseEntity>> pre = prerequisites.get(s);
@@ -112,8 +127,48 @@ public class TheKnowledgeBuilder {
 
 	}
 
+	public TheKnowledgeBuilder generateIds(List<Class<? extends BaseEntity>> entities) {
+		this.generateIdsFor = entities;
+		return this;
+	}
+
+	@SafeVarargs
+	public final TheKnowledgeBuilder generateIds(Class<? extends BaseEntity>... entities) {
+		return generateIds(Arrays.asList(entities));
+	}
+
 	public TheKnowledge build() {
+
+		theKnowledge.entities = new ArrayList<>();
+		addEntities(theKnowledge.polls);
+		addEntities(theKnowledge.votes);
+		addEntities(theKnowledge.users);
+
+		if (activated(generateIdsFor)) {
+			doGenerateIds();
+		}
 		return theKnowledge;
+	}
+
+	private boolean activated(List<Class<? extends BaseEntity>> entites) {
+		return entites != null;
+	}
+
+	public TheKnowledgeBuilder generateIds() {
+		generateIdsFor = Lists.newArrayList(activatedEntities);
+		return this;
+	}
+
+	private void doGenerateIds() {
+		for (BaseEntity e : theKnowledge.entities) {
+			e.setId(RandomUtils.nextLong(1, 99999999));
+		}
+	}
+
+	private void addEntities(List<? extends BaseEntity> entities) {
+		if (entities != null) {
+			theKnowledge.entities.addAll(entities);
+		}
 	}
 
 }

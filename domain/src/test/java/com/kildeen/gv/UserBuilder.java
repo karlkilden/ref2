@@ -26,10 +26,11 @@ public class UserBuilder {
 		user.setName(name);
 		return this;
 	}
-
+	
 	@Override
 	public String toString() {
 		return user.toString();
 	}
+
 
 }

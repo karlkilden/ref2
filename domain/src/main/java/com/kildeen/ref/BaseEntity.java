@@ -34,7 +34,7 @@ public class BaseEntity implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	protected long id;
+	private long id;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "updated")
@@ -71,6 +71,11 @@ public class BaseEntity implements Serializable {
 	public long getId() {
 		return id;
 	}
+	
+
+	public void setId(long id) {
+		this.id = id;
+	}
 
 	public String baseToString() {
 		return " id: " + id;
@@ -106,5 +111,6 @@ public class BaseEntity implements Serializable {
 		}
 		return equal;
 	}
+
 
 }
