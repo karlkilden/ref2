@@ -18,7 +18,7 @@ public class SolrPostQueue {
 	@SuppressWarnings("rawtypes")
 	private Queue dtos = new ConcurrentLinkedDeque<>();
 
-	@Schedule(hour = "*", minute = "*", second = "10")
+	@Schedule(hour = "*", minute = "*", second = "*/2")
 	@Lock(LockType.WRITE)
 	public void writeJournalMessages() {
 		Queue<?> postCopy;

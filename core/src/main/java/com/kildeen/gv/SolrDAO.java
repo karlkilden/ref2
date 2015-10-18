@@ -2,30 +2,31 @@ package com.kildeen.gv;
 
 import java.io.IOException;
 import java.util.Collection;
-import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.deltaspike.core.api.exclude.Exclude;
-import org.apache.deltaspike.core.api.projectstage.ProjectStage;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.client.solrj.response.UpdateResponse;
-import org.apache.solr.common.params.CommonParams;
+
+import com.kildeen.gv.entity.EntityConfigurationHandler;
 
 @ApplicationScoped
 public class SolrDAO {
 
 	protected SolrClient client;
+	
+	@Inject
+	EntityConfigurationHandler entityConfHandler;
 
 	public QueryResponse query(SolrQuery solrQuery, Class<?> dtoType) {
-		SolrQuery defaults = SolrSearchDefaults.getDefault(dtoType);
+		SolrQuery defaults = entityConfHandler.getDefaultQuery(dtoType);
 
 		for (String param : defaults.getParameterNames()) {
 			solrQuery.add(param, defaults.getParams(param));

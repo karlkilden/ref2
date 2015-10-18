@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -16,6 +17,7 @@ import org.junit.runners.model.Statement;
 
 import com.kildeen.gv.PersistenceDecorator;
 import com.kildeen.gv.TheKnowledge;
+import com.kildeen.gv.TheKnowledgeBuilder;
 import com.kildeen.ref.BaseEntity;
 
 public class TestHelp<E extends BaseEntity> implements TestRule {
@@ -77,7 +79,7 @@ public class TestHelp<E extends BaseEntity> implements TestRule {
 		List<Class<? extends BaseEntity>> all = new ArrayList<>(entities);
 		all.add(clazz);
 
-		return TheKnowledge.TheKnowledgeBuilder.getInstance().decorator(PersistenceDecorator.getInstance()).with(all).build();
+		return TheKnowledgeBuilder.getInstance().decorator(PersistenceDecorator.getInstance()).with(all).build();
 	}
 
 	public TheKnowledge getKnowledge() {
