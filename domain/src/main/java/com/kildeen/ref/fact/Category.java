@@ -5,10 +5,10 @@ import javax.validation.constraints.NotNull;
 
 import org.apache.bval.constraints.NotEmpty;
 
-import com.kildeen.ref.BaseEntity;
+import com.kildeen.gv.DomainEntity;
 
 @Entity
-public class Category extends BaseEntity {
+public class Category extends DomainEntity {
 	@NotNull
 	@NotEmpty
 	private String name;

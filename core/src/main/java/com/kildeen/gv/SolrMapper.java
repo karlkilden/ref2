@@ -12,7 +12,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.eclipse.persistence.internal.jpa.rs.metadata.model.Link;
 
 import com.kildeen.gv.entity.EntityConfiguration;
-import com.kildeen.gv.entity.EntityConfigurationHandler;
+import com.kildeen.gv.entity.EntityConfigurationContext;
 
 /**
  * This class can take any entity listed as {@link EntityConfiguration#solr()} as an object and adds it to to {@link SolrPostQueue}
@@ -26,7 +26,7 @@ public class SolrMapper {
 	SolrPostQueue solrPostQueue;
 
 	@Inject
-	EntityConfigurationHandler entityConfigurationHandler;
+	EntityConfigurationContext entityConfigurationHandler;
 
 	@PostConstruct
 	private void init() {

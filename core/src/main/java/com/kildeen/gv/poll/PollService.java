@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.apache.deltaspike.data.api.QueryResult;
 import org.apache.solr.client.solrj.SolrQuery;
 
 import com.kildeen.gv.Service;
@@ -61,6 +62,10 @@ public class PollService {
 	public List<PollDTO> solr(SolrQuery q, String userName) {
 		return solrDAO.query(q, PollDTO.class).getBeans(PollDTO.class);
 
+	}
+
+	public QueryResult<Poll> fetchPollResult() {
+		return repo.fetchPollResult();
 	}
 	
 

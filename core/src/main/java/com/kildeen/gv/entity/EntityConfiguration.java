@@ -3,31 +3,45 @@ package com.kildeen.gv.entity;
 import java.util.Objects;
 import java.util.function.Function;
 
-import com.kildeen.ref.BaseEntity;
+import javax.persistence.Entity;
+
+import org.apache.commons.lang3.StringUtils;
+
+import com.kildeen.gv.DomainEntity;
 
 /**
- * Each entity needs to have a configuration listed in {@link EntityConfigurationHandler}. This is a single place of setup for a single entity
+ * Each entity needs to have a configuration listed in
+ * {@link EntityConfigurationContext}. This is a single place of setup for a
+ * single entity
  * 
  * @author Kalle
- * @param <T> The entity to configure
+ * @param <T>
+ *            The entity to configure
  * 
  */
-public class EntityConfiguration<T extends BaseEntity> {
+public class EntityConfiguration<T extends DomainEntity> {
 
-	private Class<? extends BaseEntity> clazz;
+	private Class<? extends DomainEntity> clazz;
 	private boolean solr;
 	private boolean restIn;
 	private boolean restOut;
 	private Class<?> dtoClazz;
 	private Function<Object, Object> dtoMappingFunction;
+	private String tableName;
 
-	public static <T extends BaseEntity> EntityConfiguration<T> create(Class<T> clazz) {
+	public static <T extends DomainEntity> EntityConfiguration<T> create(Class<T> clazz) {
 		EntityConfiguration<T> conf = new EntityConfiguration<T>();
 		conf.clazz = clazz;
+		Entity e = clazz.getAnnotation(Entity.class);
+		if (StringUtils.isEmpty(e.name())) {
+			conf.tableName = clazz.getSimpleName();
+		} else {
+			conf.tableName = e.name();
+		}
 		return conf;
 	}
 
-	public static <T extends BaseEntity> EntityConfiguration<T> create(Class<T> clazz, Class<?> dtoClazz) {
+	public static <T extends DomainEntity> EntityConfiguration<T> create(Class<T> clazz, Class<?> dtoClazz) {
 		EntityConfiguration<T> ec = create(clazz);
 		ec.dtoClazz = dtoClazz;
 		return ec;
@@ -81,6 +95,10 @@ public class EntityConfiguration<T extends BaseEntity> {
 
 	public boolean hasSolr() {
 		return solr;
+	}
+
+	public String getTableName() {
+		return tableName;
 	}
 
 }

@@ -26,7 +26,7 @@
 		<solrj.version>5.2.1</solrj.version>
 		<bval.version>0.5</bval.version>
 		<jbatch-api.version>1.0</jbatch-api.version>
-		<liquibase.version>3.2.2</liquibase.version>
+		<liquibase.version>3.4.0</liquibase.version>
 
 
 

@@ -15,7 +15,7 @@ import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.client.solrj.response.UpdateResponse;
 
-import com.kildeen.gv.entity.EntityConfigurationHandler;
+import com.kildeen.gv.entity.EntityConfigurationContext;
 
 @ApplicationScoped
 public class SolrDAO {
@@ -23,7 +23,7 @@ public class SolrDAO {
 	protected SolrClient client;
 	
 	@Inject
-	EntityConfigurationHandler entityConfHandler;
+	EntityConfigurationContext entityConfHandler;
 
 	public QueryResponse query(SolrQuery solrQuery, Class<?> dtoType) {
 		SolrQuery defaults = entityConfHandler.getDefaultQuery(dtoType);

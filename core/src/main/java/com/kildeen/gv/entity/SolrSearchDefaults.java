@@ -7,24 +7,24 @@ import java.util.Objects;
 
 import org.apache.solr.client.solrj.SolrQuery;
 
+import com.kildeen.gv.DomainEntity;
 import com.kildeen.gv.poll.PollDTO;
 import com.kildeen.gv.poll.VoteDTO;
-import com.kildeen.ref.BaseEntity;
 
 public class SolrSearchDefaults {
 
 	private static final Map<Class<?>, SolrQuery> BASE_QUERIES = setupDefaults();
 
-	SolrSearchDefaults(List<EntityConfiguration<? extends BaseEntity>> configs) {
+	SolrSearchDefaults(List<EntityConfiguration<? extends DomainEntity>> configs) {
 		verifySolrConfig(configs);
 	}
 
-	private void verifySolrConfig(List<EntityConfiguration<? extends BaseEntity>> configs) {
+	private void verifySolrConfig(List<EntityConfiguration<? extends DomainEntity>> configs) {
 		configs.stream().filter(ec -> ec.hasSolr()).forEach(ec -> requireBaseQuery(ec));
 
 	}
 
-	private void requireBaseQuery(EntityConfiguration<? extends BaseEntity> ec) {
+	private void requireBaseQuery(EntityConfiguration<? extends DomainEntity> ec) {
 		Objects.requireNonNull(BASE_QUERIES.get((Object) ec.getDTOClass()), "Missing solr search default for: " + ec.getClazz().getSimpleName());
 	}
 

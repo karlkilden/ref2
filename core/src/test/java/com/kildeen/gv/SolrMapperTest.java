@@ -8,7 +8,7 @@ import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import com.kildeen.gv.entity.EntityConfigurationHandler;
+import com.kildeen.gv.entity.EntityConfigurationContext;
 import com.kildeen.gv.entity.EntityConfigurationHandlerMock;
 import com.kildeen.gv.vote.Poll;
 
@@ -18,7 +18,7 @@ public class SolrMapperTest {
 	TheKnowledge tk = TheKnowledgeBuilder.getInstance().with(Poll.class).build();
 	
 	@Spy
-	private EntityConfigurationHandler entityConfigurationHandler = new EntityConfigurationHandlerMock();
+	private EntityConfigurationContext entityConfigurationHandler = new EntityConfigurationHandlerMock();
 
 	@Mock
 	private SolrPostQueue solrPostQueue;

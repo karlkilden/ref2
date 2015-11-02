@@ -8,12 +8,12 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.validation.constraints.NotNull;
 
+import com.kildeen.gv.DomainEntity;
 import com.kildeen.gv.auth.User;
-import com.kildeen.ref.BaseEntity;
 
 @Entity
 // @SequenceGenerator(name = BaseEntity.GVSEQ, sequenceName = "vote_seq")
-public class Vote extends BaseEntity {
+public class Vote extends DomainEntity {
 
 	private static final int VOTE_NO_POINTS = -1;
 	private static final int VOTE_YES_POINTS = 1;

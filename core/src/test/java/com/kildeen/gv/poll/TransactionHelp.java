@@ -9,7 +9,7 @@ import javax.persistence.EntityManager;
 
 import org.apache.deltaspike.jpa.api.transaction.Transactional;
 
-import com.kildeen.ref.BaseEntity;
+import com.kildeen.gv.DomainEntity;
 
 @Transactional
 @ApplicationScoped
@@ -23,7 +23,7 @@ public class TransactionHelp {
     public Object persist(Object entity) {
     	return this.entityManager.merge(entity);
     }
-    public BaseEntity find (BaseEntity entity) {
+    public DomainEntity find (DomainEntity entity) {
     	return entityManager.find(entity.getClass(), entity.getId());
     }
     

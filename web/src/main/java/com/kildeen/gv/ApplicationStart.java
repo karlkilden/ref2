@@ -30,6 +30,9 @@ public class ApplicationStart implements Serializable {
 
 	@Inject
 	private AsyncPollService asyncPollService;
+	
+	@Inject
+	private LiquibaseSetup liquibase;
 
 
 	private java.util.logging.Logger logger;
@@ -37,6 +40,12 @@ public class ApplicationStart implements Serializable {
 	public void boot(@Observes @Initialized final ServletContext context) {
 		turnOffNoisyLogger();
 		asyncPollService.postAll();
+		try {
+			liquibase.executeChanges();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private void turnOffNoisyLogger() {

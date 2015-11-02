@@ -5,49 +5,58 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
+import liquibase.changelog.ChangeSet;
 
 import org.apache.solr.client.solrj.SolrQuery;
 
 import com.google.common.collect.Lists;
+import com.kildeen.gv.DomainEntity;
 import com.kildeen.gv.poll.PollDTO;
 import com.kildeen.gv.poll.VoteDTO;
 import com.kildeen.gv.vote.Poll;
 import com.kildeen.gv.vote.Vote;
-import com.kildeen.ref.BaseEntity;
 
-@ApplicationScoped
 public class EntityConfigurationHandler {
 
+	private static final EntityConfigurationHandler INSTANCE = new EntityConfigurationHandler();
 	private EntityConfiguration<Poll> pollConfig = EntityConfiguration.create(Poll.class, PollDTO.class).mappingMethod(PollDTO::get).restIn()
 			.restOut().solr().build();
 	private EntityConfiguration<Vote> voteConfig = EntityConfiguration.create(Vote.class, VoteDTO.class).mappingMethod(VoteDTO::get).restIn()
 			.restOut().solr().build();
 
-	@SuppressWarnings("unchecked")
-	List<EntityConfiguration<? extends BaseEntity>> configs = Lists.newArrayList(pollConfig, voteConfig);
+	List<EntityConfiguration<?>> configs = Lists.newArrayList(pollConfig, voteConfig);
 	private Map<Class<?>, Function<Object, Object>> dtoMapper = new HashMap<>();
-
+	private Map<String, EntityConfiguration<?>> tableNameToEntity = new HashMap<>();
 	private SolrSearchDefaults solrDefaults = new SolrSearchDefaults(configs);
 
-	@PostConstruct
-	private void init() {
+	private EntityConfigurationHandler() {
 		mapHowToCreateDtos();
+		mapTableNames();
+	}
+	
+
+	public static EntityConfigurationHandler getInstance() {
+		return INSTANCE;
+	}
+
+	private void mapTableNames() {
+		for (EntityConfiguration<?> conf : configs) {
+			tableNameToEntity.put(conf.getTableName(), conf);
+		}
 	}
 
 	void mapHowToCreateDtos() {
 		configs.stream().filter(ec -> ec.hasDTO()).forEach(ec -> dtoMapper.put(ec.getClazz(), ec.getMappingMethod()));
 	}
 
-	public Object getDTO(BaseEntity entity) {
+	public Object getDTO(DomainEntity entity) {
 		return dtoMapper.get(entity.getClass()).apply(entity);
 
 	}
 
 	/**
 	 * This method should be used when multiple mappings are done in a loop. It
-	 * then performs better than {@link #getDTO(BaseEntity)}
+	 * then performs better than {@link #getDTO(DomainEntity)}
 	 * 
 	 * @param entity
 	 *            class
@@ -60,5 +69,14 @@ public class EntityConfigurationHandler {
 	public SolrQuery getDefaultQuery(Class<?> dtoType) {
 		return solrDefaults.getDefault(dtoType);
 	}
+
+	public List<EntityConfiguration<?>> getAll() {
+		return configs;
+	}
+
+	public EntityConfiguration<?> getByTableName(String tableName) {
+		return tableNameToEntity.get(tableName);
+	}
+
 
 }
