@@ -43,8 +43,8 @@ public class PollProducer {
 		
 		SolrQuery query = QueryBuilder
 		.advancedQuery()
-		.paranthesis()
 		.negate()
+		.paranthesis()
 		.join(VoteDTO.POLL_ID, VoteDTO.DATABASE_ID)
 		.condition(VoteDTO.ANSWER, "*")
 		.and()

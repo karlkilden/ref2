@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.deltaspike.core.util.ExceptionUtils;
 
-import com.kildeen.ref.BaseEntity;
+import com.kildeen.gv.DomainEntity;
 
 public class BaseEntityUtil {
 
@@ -29,7 +29,7 @@ public class BaseEntityUtil {
 			setId(ids.get(i), entities.get(i));
 		}
     }
-    public static void setIds(List<? extends BaseEntity> entities) {
+    public static void setIds(List<? extends DomainEntity> entities) {
     	for (int i = 0; i < entities.size(); i++) {
     		setId(entities.get(i));
     	}

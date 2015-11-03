@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd">
+	<changeSet author="Mattias Kettil, Karl Kilden" id="1424679444488-1">
+		<createTable tableName="MP_RAWLIST">
+			<column name="UNIQUEKEY" type="NVARCHAR(4000)">
+				<constraints nullable="false" />
+			</column>
+			<column name="BUYERID" type="NVARCHAR(4000)" />
+			<column name="SUPPLIERID" type="NVARCHAR(4000)" />
+			<column name="LISTID" type="NVARCHAR(4000)" />
+			<column name="LISTTYPE" type="BIGINT"/>
+			<column name="LISTDATE" type="datetime" />
+			<column name="AGREEMENTREF" type="NVARCHAR(4000)" />
+			<column name="LISTIDOLD" type="NVARCHAR(4000)" />
+			<column name="FROMDATE" type="datetime" />
+			<column name="TODATE" type="datetime" />
+			<column name="CURRENCY" type="NVARCHAR(4000)" />
+			<column name="FILEPATH" type="NVARCHAR(4000)" />
+		</createTable>
+	</changeSet>
+
+
+<changeSet author="Mattias Kettil, Karl Kilden"
+        id="1424679444488-1"
+        objectQuotingStrategy="LEGACY">
+    <createTable tableName="MP_RAWLIST">
+        <column name="UNIQUEKEY" type="NVARCHAR(4000)">
+            <constraints nullable="false"/>
+        </column>
+        <column name="BUYERID" type="NVARCHAR(4000)"/>
+        <column name="SUPPLIERID" type="NVARCHAR(4000)"/>
+        <column name="LISTID" type="NVARCHAR(4000)"/>
+        <column name="LISTTYPE" type="BIGINT"/>
+        <column name="LISTDATE" type="datetime"/>
+        <column name="AGREEMENTREF" type="NVARCHAR(4000)"/>
+        <column name="LISTIDOLD" type="NVARCHAR(4000)"/>
+        <column name="FROMDATE" type="datetime"/>
+        <column name="TODATE" type="datetime"/>
+        <column name="CURRENCY" type="NVARCHAR(4000)"/>
+        <column name="FILEPATH" type="NVARCHAR(4000)"/>
+    </createTable>
+</changeSet>
+<changeSet author="Mattias Kettil, Karl Kilden"
+        id="1424679444488-1"
+        objectQuotingStrategy="LEGACY">
+    <createTable tableName="MP_RAWLIST">
+        <column name="UNIQUEKEY" type="NVARCHAR(4000)">
+            <constraints nullable="false"/>
+        </column>
+        <column name="BUYERID" type="NVARCHAR(4000)"/>
+        <column name="SUPPLIERID" type="NVARCHAR(4000)"/>
+        <column name="LISTID" type="NVARCHAR(4000)"/>
+        <column name="LISTTYPE" type="BIGINT"/>
+        <column name="LISTDATE" type="datetime"/>
+        <column name="AGREEMENTREF" type="NVARCHAR(4000)"/>
+        <column name="LISTIDOLD" type="NVARCHAR(4000)"/>
+        <column name="FROMDATE" type="datetime"/>
+        <column name="TODATE" type="datetime"/>
+        <column name="CURRENCY" type="NVARCHAR(4000)"/>
+        <column name="FILEPATH" type="NVARCHAR(4000)"/>
+    </createTable>
+</changeSet>
+<changeSet author="Mattias Kettil, Karl Kilden"
+        id="1424679444488-1"
+        objectQuotingStrategy="LEGACY">
+    <createTable tableName="MP_RAWLIST">
+        <column name="UNIQUEKEY" type="NVARCHAR(4000)">
+            <constraints nullable="false"/>
+        </column>
+        <column name="BUYERID" type="NVARCHAR(4000)"/>
+        <column name="SUPPLIERID" type="NVARCHAR(4000)"/>
+        <column name="LISTID" type="NVARCHAR(4000)"/>
+        <column name="LISTTYPE" type="BIGINT"/>
+        <column name="LISTDATE" type="datetime"/>
+        <column name="AGREEMENTREF" type="NVARCHAR(4000)"/>
+        <column name="LISTIDOLD" type="NVARCHAR(4000)"/>
+        <column name="FROMDATE" type="datetime"/>
+        <column name="TODATE" type="datetime"/>
+        <column name="CURRENCY" type="NVARCHAR(4000)"/>
+        <column name="FILEPATH" type="NVARCHAR(4000)"/>
+    </createTable>
+</changeSet>
+<changeSet author="Mattias Kettil, Karl Kilden"
+        id="1424679444488-1"
+        objectQuotingStrategy="LEGACY">
+    <createTable tableName="MP_RAWLIST">
+        <column name="UNIQUEKEY" type="NVARCHAR(4000)">
+            <constraints nullable="false"/>
+        </column>
+        <column name="BUYERID" type="NVARCHAR(4000)"/>
+        <column name="SUPPLIERID" type="NVARCHAR(4000)"/>
+        <column name="LISTID" type="NVARCHAR(4000)"/>
+        <column name="LISTTYPE" type="BIGINT"/>
+        <column name="LISTDATE" type="datetime"/>
+        <column name="AGREEMENTREF" type="NVARCHAR(4000)"/>
+        <column name="LISTIDOLD" type="NVARCHAR(4000)"/>
+        <column name="FROMDATE" type="datetime"/>
+        <column name="TODATE" type="datetime"/>
+        <column name="CURRENCY" type="NVARCHAR(4000)"/>
+        <column name="FILEPATH" type="NVARCHAR(4000)"/>
+    </createTable>
+</changeSet>
+</databaseChangeLog>

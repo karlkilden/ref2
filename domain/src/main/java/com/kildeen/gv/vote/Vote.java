@@ -1,36 +1,45 @@
 package com.kildeen.gv.vote;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.validation.constraints.NotNull;
 
+import com.kildeen.gv.DomainEntity;
 import com.kildeen.gv.auth.User;
-import com.kildeen.ref.BaseEntity;
 
 @Entity
 // @SequenceGenerator(name = BaseEntity.GVSEQ, sequenceName = "vote_seq")
-public class Vote extends BaseEntity {
+public class Vote extends DomainEntity {
 
 	private static final int VOTE_NO_POINTS = -1;
-	private static final int _VOTE_YES_POINTS = 1;
+	private static final int VOTE_YES_POINTS = 1;
 	private Poll poll;
 	@ManyToOne
 	private User user;
+
+	@NotNull
+	@Enumerated(EnumType.STRING)
+	private AnswerType answer;
+
+	private long points;
+
+	public Vote(AnswerType answer) {
+		this.answer = answer;
+	}
+
+	public Vote() {
+	}
 
 	public Poll getPoll() {
 		return poll;
 	}
 
 	public void setPoll(Poll poll) {
-		
+
 		this.poll = poll;
 	}
 
@@ -58,18 +67,13 @@ public class Vote extends BaseEntity {
 		this.points = points;
 	}
 
-	@NotNull
-	@Enumerated(EnumType.STRING)
-	private AnswerType answer;
-
-	private long points;
-
 	@PrePersist
 	@PreUpdate
-	private void addPoints() {
+	public
+	void addPoints() {
 		switch (answer) {
 		case YES:
-			points = _VOTE_YES_POINTS;
+			points = VOTE_YES_POINTS;
 			break;
 		case NO:
 			points = VOTE_NO_POINTS;
@@ -78,6 +82,5 @@ public class Vote extends BaseEntity {
 			break;
 		}
 	}
-
 
 }

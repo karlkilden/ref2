@@ -7,11 +7,11 @@ import javax.validation.constraints.NotNull;
 
 import org.apache.bval.constraints.NotEmpty;
 
-import com.kildeen.ref.BaseEntity;
+import com.kildeen.gv.DomainEntity;
 
 @Entity
 // @SequenceGenerator(name = BaseEntity.GVSEQ, sequenceName = "poll_seq")
-public class Poll extends BaseEntity {
+public class Poll extends DomainEntity {
 
 	@NotEmpty
 	@NotNull

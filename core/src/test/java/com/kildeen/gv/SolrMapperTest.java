@@ -1,42 +1,46 @@
 package com.kildeen.gv;
 
-import static org.mockito.Mockito.verify;
-
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import com.google.common.collect.Lists;
-import com.kildeen.gv.poll.PollDTO;
+import com.kildeen.gv.entity.EntityConfigurationContext;
+import com.kildeen.gv.entity.EntityConfigurationHandlerMock;
 import com.kildeen.gv.vote.Poll;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SolrMapperTest {
+	
+	TheKnowledge tk = TheKnowledgeBuilder.getInstance().with(Poll.class).build();
+	
+	@Spy
+	private EntityConfigurationContext entityConfigurationHandler = new EntityConfigurationHandlerMock();
+
 	@Mock
 	private SolrPostQueue solrPostQueue;
 	@InjectMocks
 	private SolrMapper solrMapper;
 
-	@Before
-	public void init() {
-		solrMapper.init();
+	@Test(expected = NullPointerException.class)
+	public void not_an_entity_configured_for_solr_should_throw_exception() throws Exception {
+		solrMapper.queue(new Object());
 	}
+	
 
 	@Test
-	public void single_entity_should_get_queued() throws Exception {
-		Poll p = new Poll();
-		solrMapper.queue(p);
-		verify(solrPostQueue).add(new PollDTO(p));
+	public void poll_should_be_added_as_dtos_to_queue() throws Exception {
+		solrMapper.queue(tk.beer);
+		Mockito.verify(solrPostQueue).add(Mockito.any()); 
 	}
 	
 	@Test
-	public void collection_of_entity_should_get_queued() throws Exception {
-		Poll p = new Poll();
-		solrMapper.queue(Lists.newArrayList(p));
-		verify(solrPostQueue).add(new PollDTO(p));
+	public void polls_should_be_added_as_dtos_to_queue() throws Exception {
+		solrMapper.queue(tk.beverages);
+		Mockito.verify(solrPostQueue, Mockito.times(2)).add(Mockito.any()); 
 	}
 
 }

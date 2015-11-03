@@ -1,53 +1,59 @@
 package com.kildeen.gv;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
-import com.kildeen.gv.poll.PollDTO;
-import com.kildeen.gv.poll.VoteDTO;
-import com.kildeen.gv.vote.Poll;
-import com.kildeen.gv.vote.Vote;
+import org.apache.commons.collections4.CollectionUtils;
+import org.eclipse.persistence.internal.jpa.rs.metadata.model.Link;
 
+import com.kildeen.gv.entity.EntityConfiguration;
+import com.kildeen.gv.entity.EntityConfigurationContext;
+
+/**
+ * This class can take any entity listed as {@link EntityConfiguration#solr()} as an object and adds it to to {@link SolrPostQueue}
+ * @author Kalle
+ *
+ */
 @ApplicationScoped
 public class SolrMapper {
 
-	private static final int ENTITY_MAPPER_COUNT = 2;
+	@Inject
+	SolrPostQueue solrPostQueue;
 
 	@Inject
-	private SolrPostQueue solrPostQueue;
-
-	private Map<Class<?>, Function<Object, Object>> dtoMapper = new HashMap<>(ENTITY_MAPPER_COUNT);
+	EntityConfigurationContext entityConfigurationHandler;
 
 	@PostConstruct
-	void init() {
-		dtoMapper.put(Poll.class, PollDTO::get);
-		dtoMapper.put(Vote.class, VoteDTO::get);
+	private void init() {
+
 	}
 
-	public void queue(Object entityReturnValue) {
-
-		if (entityReturnValue == null) {
-			return;
-		}
-
-		if (Collection.class.isAssignableFrom(entityReturnValue.getClass())) {
+	public void queue(Object methodResult) {
+		if (Collection.class.isAssignableFrom(methodResult.getClass())) {
 			@SuppressWarnings("rawtypes")
-			Collection col = (Collection) entityReturnValue;
-			if (!col.isEmpty()) {
-				Function<Object, Object> mapper = dtoMapper.get(col.stream().findAny().get().getClass());
+			Collection col = (Collection) methodResult;
+			if (CollectionUtils.isNotEmpty(col)) {
+				Object firstEntity = col.stream().findAny().get();
+				Function<Object, Object> mapper = getMapper(firstEntity);
 				for (Object entity : col) {
 					queue(entity, mapper);
 				}
 			}
 		} else {
-			queue(entityReturnValue, dtoMapper.get(entityReturnValue.getClass()));
+			queue(methodResult, getMapper(methodResult));
 		}
+	}
+
+	private Function<Object, Object> getMapper(Object firstEntity) {
+		Class<? extends Object> entityClazz = firstEntity.getClass();
+		Function<Object, Object> dtoMapper = entityConfigurationHandler.getDTOMapper(entityClazz);
+		Objects.requireNonNull(dtoMapper, "this class is not configured for solr: "+ entityClazz);
+		return dtoMapper;
 	}
 
 	private void queue(Object entity, Function<Object, Object> mapper) {

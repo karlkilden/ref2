@@ -1,28 +1,32 @@
 package com.kildeen.gv;
 
+import java.io.IOException;
 import java.util.Collection;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.event.Event;
 import javax.inject.Inject;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.client.solrj.response.UpdateResponse;
+
+import com.kildeen.gv.entity.EntityConfigurationContext;
 
 @ApplicationScoped
 public class SolrDAO {
 
 	protected SolrClient client;
-
+	
 	@Inject
-	private Event<ExceptionEvent> exceptionEvent;
+	EntityConfigurationContext entityConfHandler;
 
 	public QueryResponse query(SolrQuery solrQuery, Class<?> dtoType) {
-		SolrQuery defaults = SolrSearchDefaults.getDefault(dtoType);
+		SolrQuery defaults = entityConfHandler.getDefaultQuery(dtoType);
 
 		for (String param : defaults.getParameterNames()) {
 			solrQuery.add(param, defaults.getParams(param));
@@ -31,7 +35,7 @@ public class SolrDAO {
 		try {
 			resp = client.query(solrQuery);
 		} catch (Exception e) {
-			exceptionEvent.fire(new ExceptionEvent(e));
+			e.printStackTrace();
 		}
 		return resp;
 	}
@@ -42,14 +46,35 @@ public class SolrDAO {
 		}
 		try {
 			client.addBeans(dtos);
-			client.commit();
-		} catch (Exception e) {
-			exceptionEvent.fire(new ExceptionEvent(e));
+			UpdateResponse resp = client.commit();
+		} catch (SolrServerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void post(Object dto) {
+		try {
+			client.addBean(dto);
+			UpdateResponse resp = client.commit();
+		} catch (SolrServerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
 	@PostConstruct
-	void init() {
+	private void init() {
+		setup();
+	}
+
+	protected void setup() {
 		client = new HttpSolrClient("http://localhost:8983/solr/gv");
 	}
 

@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -14,18 +15,19 @@ import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 
+import com.kildeen.gv.DomainEntity;
 import com.kildeen.gv.PersistenceDecorator;
 import com.kildeen.gv.TheKnowledge;
-import com.kildeen.ref.BaseEntity;
+import com.kildeen.gv.TheKnowledgeBuilder;
 
-public class TestHelp<E extends BaseEntity> implements TestRule {
+public class TestHelp<E extends DomainEntity> implements TestRule {
 	@Inject
 	private EntityManager entityManager;
 	@Inject
 	private TransactionHelp transactionHelp;
 	private Class<E> clazz;
 
-	public static <E extends BaseEntity> TestHelp<E> getInstance(Class<E> clazz) {
+	public static <E extends DomainEntity> TestHelp<E> getInstance(Class<E> clazz) {
 		TestHelp<E> help = new TestHelp<>();
 		help.clazz = clazz;
 		BeanProvider.injectFields(help);
@@ -52,8 +54,12 @@ public class TestHelp<E extends BaseEntity> implements TestRule {
 		}
 		return (E) transactionHelp.persist(entity);
 	}
+	
+	public static DomainEntity persistEntity(DomainEntity entity) {
+		return (DomainEntity) BeanProvider.getContextualReference(TransactionHelp.class).persist(entity);
+	}
 
-	public void persist(Object... entities) {
+	public void persistAll(Object... entities) {
 		for (Object o : entities) {
 			transactionHelp.persist(o);
 		}
@@ -73,11 +79,11 @@ public class TestHelp<E extends BaseEntity> implements TestRule {
 		};
 	}
 
-	public TheKnowledge getKnowledge(List<Class<? extends BaseEntity>> entities) {
-		List<Class<? extends BaseEntity>> all = new ArrayList<>(entities);
+	public TheKnowledge getKnowledge(List<Class<? extends DomainEntity>> entities) {
+		List<Class<? extends DomainEntity>> all = new ArrayList<>(entities);
 		all.add(clazz);
 
-		return TheKnowledge.TheKnowledgeBuilder.getInstance().decorator(PersistenceDecorator.getInstance()).with(all).build();
+		return TheKnowledgeBuilder.getInstance().decorator(new PersistenceDecorator()).with(all).build();
 	}
 
 	public TheKnowledge getKnowledge() {

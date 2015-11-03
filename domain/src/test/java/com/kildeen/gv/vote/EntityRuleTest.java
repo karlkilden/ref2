@@ -1,6 +1,6 @@
 package com.kildeen.gv.vote;
 
-import static org.assertj.core.api.StrictAssertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 
 import javax.persistence.SequenceGenerator;
@@ -10,7 +10,7 @@ import org.junit.Test;
 import org.junit.runner.Description;
 import org.mockito.Mockito;
 
-import com.kildeen.ref.BaseEntity;
+import com.kildeen.gv.DomainEntity;
 
 @Ignore
 @SuppressWarnings({"unchecked", "rawtypes"})
@@ -75,7 +75,7 @@ public class EntityRuleTest {
 	}
 
 	private class WrongGeneratorNameTest {
-		@SequenceGenerator(name = BaseEntity.GVSEQ, sequenceName = "poll_seq")
+		@SequenceGenerator(name = DomainEntity.GVSEQ, sequenceName = "poll_seq")
 		public class WrongGeneratorName {
 
 		}
@@ -88,7 +88,7 @@ public class EntityRuleTest {
 
 	}
 	private class AllOkTest {
-		@SequenceGenerator(name = BaseEntity.GVSEQ, sequenceName = "allOk_seq")
+		@SequenceGenerator(name = DomainEntity.GVSEQ, sequenceName = "allOk_seq")
 		public class AllOk {
 
 		}
