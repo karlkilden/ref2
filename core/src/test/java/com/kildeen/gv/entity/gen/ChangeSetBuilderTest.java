@@ -11,6 +11,7 @@ import liquibase.change.core.CreateTableChange;
 import liquibase.changelog.ChangeSet;
 import liquibase.changelog.DatabaseChangeLog;
 
+import org.apache.openejb.jee.jba.cmp.CreateTable;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,6 +40,8 @@ public class ChangeSetBuilderTest {
 	public void before() throws Exception {
 
 		changeSetBuilder.clearCache();
+		mock.createIndex("Vote", 0).createTable("Poll", 1).record();
+		when(liquibaseHelper.get()).thenReturn(mock.get());
 	}
 
 	@Test

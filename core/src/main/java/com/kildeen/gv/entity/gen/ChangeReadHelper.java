@@ -1,6 +1,5 @@
 package com.kildeen.gv.entity.gen;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.EnumSet;
 import java.util.List;
@@ -11,7 +10,6 @@ import liquibase.change.ColumnConfig;
 
 import org.apache.xbean.recipe.Option;
 import org.apache.xbean.recipe.ReflectionUtil;
-import org.eclipse.persistence.queries.ReadObjectQuery;
 
 public class ChangeReadHelper {
 	private static Method getMethod(Change change, String propertyName) {

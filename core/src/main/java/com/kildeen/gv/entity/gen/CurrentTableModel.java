@@ -1,57 +1,48 @@
 package com.kildeen.gv.entity.gen;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 
-import liquibase.change.AbstractChange;
-import liquibase.change.Change;
-import liquibase.change.ColumnConfig;
-import liquibase.change.core.CreateIndexChange;
-
 import com.kildeen.gv.entity.EntityConfiguration;
 
+import liquibase.change.Change;
+import liquibase.change.ColumnConfig;
+
 public class CurrentTableModel {
-
-	private List<ColumnConfig> columnConfigs = new ArrayList<>();
-	private List<CreateIndexChange> indexes = new ArrayList<>();
-	Map<Class<? extends Change>, Function<Change, Boolean>> handlerMap = new HashMap<>();
-
+	CurrentTableModelBuilder builder;
+	private CurrentTableModelData data;
+	private EntityConfiguration<?> conf;
 	public CurrentTableModel(EntityConfiguration<?> conf, List<Change> changes) throws Exception {
-
-		setupSpecialCases();
+		this.conf = conf;
+		builder = new CurrentTableModelBuilder(this);
 
 		for (Change change : changes) {
 
-			Function<Change, Boolean> handler = handlerMap.get(change.getClass());
+			Function<Change, Boolean> handler = builder.get(change.getClass());
 
 			if (handler == null) {
 				Optional<List<ColumnConfig>> cols = ChangeReadHelper.getColumnConfigs(change);
 				if (cols.isPresent()) {
-					columnConfigs.addAll(cols.get());
+					builder.addColumnConfigs(cols.get());
 				}
 			}
 
 			else {
 				handler.apply(change);
 			}
-
 		}
+		data = builder.build().getData();
+
 	}
 
-	private void setupSpecialCases() {
-		handlerMap.put(CreateIndexChange.class, this::handleCreateIndex);
+	public CurrentTableModelData getData() {
+		return data;
 	}
-
-	public List<ColumnConfig> getColumnConfigs() {
-		return columnConfigs;
-	}
-
-	private boolean handleCreateIndex(Change change) {
-		return indexes.add((CreateIndexChange) change);
+	
+	@Override
+	public String toString() {
+		return conf.getTableName();
 	}
 
 }

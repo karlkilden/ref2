@@ -1,16 +1,6 @@
 package com.kildeen.gv.entity.gen;
 
-import java.io.File;
-import java.io.IOException;
-
-import liquibase.change.core.CreateTableChange;
-import liquibase.changelog.ChangeLogParameters;
 import liquibase.changelog.DatabaseChangeLog;
-import liquibase.configuration.GlobalConfiguration;
-import liquibase.configuration.LiquibaseConfiguration;
-import liquibase.database.DatabaseFactory;
-import liquibase.database.jvm.JdbcConnection;
-import liquibase.exception.ChangeLogParseException;
 import liquibase.exception.LiquibaseException;
 import liquibase.parser.ChangeLogParser;
 import liquibase.parser.ChangeLogParserFactory;
@@ -18,7 +8,6 @@ import liquibase.resource.ClassLoaderResourceAccessor;
 import liquibase.resource.CompositeResourceAccessor;
 import liquibase.resource.FileSystemResourceAccessor;
 import liquibase.resource.ResourceAccessor;
-import liquibase.serializer.core.xml.XMLChangeLogSerializer;
 
 public class LiquibaseHelper {
 	private static final String FILE_LOCATION = "C:/kalle/ref2/domain/src/main/resources/liquibase/liqui.xml";

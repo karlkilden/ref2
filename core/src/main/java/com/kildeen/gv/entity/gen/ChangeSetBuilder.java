@@ -39,18 +39,18 @@ public class ChangeSetBuilder {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		for (ChangeSet set : lbChangeLog.getChangeSets()) {
 			for (Change change : set.getChanges()) {
 				Optional<String> tableName = getTableName(change, "tableName", "baseTableName");
 				if (tableName.isPresent()) {
 					EntityConfiguration<?> conf = handler.getByTableName(tableName.get());
-					changesPerEntity.computeIfAbsent(conf, c -> new ArrayList<Change>()).add(change);
+					changesPerEntity.computeIfAbsent(conf, c -> new ArrayList<>()).add(change);
 				}
 			}
 		}
 		for (Entry<EntityConfiguration<?>, List<Change>> entry : changesPerEntity.entrySet()) {
-			CurrentTableModel m = new CurrentTableModel(entry.getKey(), entry.getValue());			
+			CurrentTableModel m = new CurrentTableModel(entry.getKey(), entry.getValue());
 		}
 
 	}
@@ -64,7 +64,5 @@ public class ChangeSetBuilder {
 		return changesPerEntity;
 
 	}
-
-
 
 }
