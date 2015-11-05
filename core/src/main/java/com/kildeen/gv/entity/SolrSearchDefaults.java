@@ -25,7 +25,7 @@ public class SolrSearchDefaults {
 	}
 
 	private void requireBaseQuery(EntityConfiguration<? extends DomainEntity> ec) {
-		Objects.requireNonNull(BASE_QUERIES.get((Object) ec.getDTOClass()), "Missing solr search default for: " + ec.getClazz().getSimpleName());
+		Objects.requireNonNull(BASE_QUERIES.get((Object) ec.getDTOClass()), "Missing solr search default for: " + ec.getDefiningClass().getSimpleName());
 	}
 
 	private static Map<Class<?>, SolrQuery> setupDefaults() {

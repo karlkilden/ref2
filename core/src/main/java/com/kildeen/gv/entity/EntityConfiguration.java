@@ -71,7 +71,7 @@ public class EntityConfiguration<T extends DomainEntity> {
 		return dtoClazz != null;
 	}
 
-	public Class<?> getClazz() {
+	public Class<?> getDefiningClass() {
 		return clazz;
 	}
 

@@ -1,9 +1,13 @@
 package com.kildeen.gv.entity;
 
+import static java.util.stream.Collectors.toList;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import liquibase.changelog.ChangeSet;
 
@@ -33,7 +37,6 @@ public class EntityConfigurationHandler {
 		mapHowToCreateDtos();
 		mapTableNames();
 	}
-	
 
 	public static EntityConfigurationHandler getInstance() {
 		return INSTANCE;
@@ -46,7 +49,7 @@ public class EntityConfigurationHandler {
 	}
 
 	void mapHowToCreateDtos() {
-		configs.stream().filter(ec -> ec.hasDTO()).forEach(ec -> dtoMapper.put(ec.getClazz(), ec.getMappingMethod()));
+		configs.stream().filter(ec -> ec.hasDTO()).forEach(ec -> dtoMapper.put(ec.getDefiningClass(), ec.getMappingMethod()));
 	}
 
 	public Object getDTO(DomainEntity entity) {
@@ -78,5 +81,13 @@ public class EntityConfigurationHandler {
 		return tableNameToEntity.get(tableName);
 	}
 
+	public List<EntityConfiguration<?>> getSolrEnabled() {
+		return configs.stream().filter(ec -> ec.hasSolr()).collect(toList());
+	}
+
+	public EntityConfiguration<?> getByClass(Class<?> clazz) {
+		Optional<EntityConfiguration<?>> conf = configs.stream().filter(ec -> ec.getDefiningClass() == clazz).findFirst();
+		return conf.orElseThrow(() -> new NullPointerException(String.format("%s is not configured", clazz.getName())));
+	}
 
 }
