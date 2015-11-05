@@ -29,7 +29,7 @@ public class ApplicationStart implements Serializable {
 
 
 	@Inject
-	private AsyncPollService asyncPollService;
+	private AsyncStartup asyncPollService;
 	
 	@Inject
 	private LiquibaseSetup liquibase;
