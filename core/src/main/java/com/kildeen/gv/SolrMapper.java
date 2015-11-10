@@ -57,8 +57,8 @@ public class SolrMapper {
 	}
 
 	private void queue(Object entity, Function<Object, Object> mapper) {
-		Object o = mapper.apply(entity);
-		solrPostQueue.add(o);
+		Object dto = mapper.apply(entity);
+		solrPostQueue.add(dto);
 	}
 
 }

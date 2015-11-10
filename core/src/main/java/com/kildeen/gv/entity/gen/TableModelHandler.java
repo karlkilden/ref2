@@ -21,18 +21,19 @@ import org.apache.xbean.recipe.ReflectionUtil;
 import com.kildeen.gv.entity.EntityConfiguration;
 import com.kildeen.gv.entity.EntityConfigurationHandler;
 
-public class ChangeSetBuilder {
+public class TableModelHandler {
 
 	private EntityConfigurationHandler handler = EntityConfigurationHandler.getInstance();
 	private DatabaseChangeLog lbChangeLog;
-	LiquibaseHelper liquibaseHelper;
 	private Map<EntityConfiguration<?>, List<Change>> changesPerEntity = new HashMap<>();
+	private LiquibaseReadHelper liquibaseHelper;
 
-	public ChangeSetBuilder() {
+	public TableModelHandler(LiquibaseReadHelper liquibaseHelper) {
+		this.liquibaseHelper = liquibaseHelper;
 
 	}
 
-	public void mapChange() throws Exception {
+	public Map<Class<?>, CurrentTableModel> mapTables() {
 		try {
 			lbChangeLog = liquibaseHelper.get();
 		} catch (Exception e) {
@@ -42,26 +43,41 @@ public class ChangeSetBuilder {
 
 		for (ChangeSet set : lbChangeLog.getChangeSets()) {
 			for (Change change : set.getChanges()) {
-				Optional<String> tableName = getTableName(change, "tableName", "baseTableName");
+				Optional<String> tableName = null;
+				try {
+					tableName = getTableName(change, "tableName", "baseTableName");
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				if (tableName.isPresent()) {
-					EntityConfiguration<?> conf = handler.getByTableName(tableName.get());
+					EntityConfiguration<?> conf = handler.getByCurrentOrPreviousTableName(set.getId(), tableName.get());
 					changesPerEntity.computeIfAbsent(conf, c -> new ArrayList<>()).add(change);
 				}
 			}
 		}
+		Map<Class<?>, CurrentTableModel> result = new HashMap<>();
 		for (Entry<EntityConfiguration<?>, List<Change>> entry : changesPerEntity.entrySet()) {
 			CurrentTableModel m = new CurrentTableModel(entry.getKey(), entry.getValue());
+			result.put(entry.getKey().getDefiningClass(), m);
 		}
 
+		createEntityModels();
+		return result;
+	}
+
+	private Map<Class<?>, CurrentEntityModel> createEntityModels() {
+		Map<Class<?>, CurrentEntityModel> entityModels = new HashMap<>();
+		for (EntityConfiguration<?> conf : handler.getAll()) {
+			CurrentEntityModel em = new CurrentEntityModel(conf, new RelationalModel());
+			entityModels.put(conf.getDefiningClass(), em);
+		}
+		entityModels.values().forEach(model -> model.addRelationalData(entityModels));
+
+		return entityModels;
 	}
 
 	public void clearCache() {
-
-	}
-
-	public Map<EntityConfiguration<?>, List<Change>> getChangeSets() {
-
-		return changesPerEntity;
 
 	}
 

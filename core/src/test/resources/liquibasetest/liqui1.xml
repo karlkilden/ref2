@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd">
+	<changeSet author="kk" id="first">
+		<createTable tableName="Vote">
+			<column name="id" type="NVARCHAR(4000)">
+				<constraints nullable="false" />
+			</column>
+			<column name="col" type="NVARCHAR(4000)" />
+			<column name="col2" type="NVARCHAR(4000)" />
+			<column name="col3" type="NVARCHAR(4000)" />
+			<column name="col4" type="BIGINT" />
+			<column name="col5" type="datetime" />
+			<column name="col6" type="NVARCHAR(4000)" />
+			<column name="col7" type="NVARCHAR(4000)" />
+			<column name="col8" type="datetime" />
+			<column name="col9" type="datetime" />
+			<column name="col10" type="datetime" />
+			<column name="col11" type="NVARCHAR(4000)" />
+			<column name="col12" type="NVARCHAR(4000)" />
+		</createTable>
+	</changeSet>
+
+</databaseChangeLog>

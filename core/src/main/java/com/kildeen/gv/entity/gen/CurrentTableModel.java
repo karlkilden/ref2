@@ -8,17 +8,19 @@ import com.kildeen.gv.entity.EntityConfiguration;
 
 import liquibase.change.Change;
 import liquibase.change.ColumnConfig;
+import liquibase.change.core.DropTableChange;
 
-public class CurrentTableModel {
+public class CurrentTableModel implements CurrentModel {
 	CurrentTableModelBuilder builder;
-	private CurrentTableModelData data;
+	private CurrentModelData data;
 	private EntityConfiguration<?> conf;
-	public CurrentTableModel(EntityConfiguration<?> conf, List<Change> changes) throws Exception {
+
+	public CurrentTableModel(EntityConfiguration<?> conf, List<Change> changes) {
 		this.conf = conf;
 		builder = new CurrentTableModelBuilder(this);
 
 		for (Change change : changes) {
-
+			
 			Function<Change, Boolean> handler = builder.get(change.getClass());
 
 			if (handler == null) {
@@ -36,13 +38,18 @@ public class CurrentTableModel {
 
 	}
 
-	public CurrentTableModelData getData() {
+	@Override
+	public CurrentModelData getData() {
 		return data;
 	}
-	
+
 	@Override
 	public String toString() {
 		return conf.getTableName();
+	}
+
+	public String getTableName() {
+		return data.getCreateTables().get(0).getTableName();
 	}
 
 }

@@ -6,8 +6,6 @@ import org.apache.solr.client.solrj.beans.Field;
 
 import com.kildeen.gv.vote.Vote;
 
-@Entity
-// @SequenceGenerator(name = BaseEntity.GVSEQ, sequenceName = "vote_seq")
 public class VoteDTO {
 
 	public static final String POLL_ID = "pollId";
@@ -33,8 +31,11 @@ public class VoteDTO {
 	public VoteDTO(Vote vote) {
 		this.id = ID_TYPE + vote.getId();
 		this.databaseId = vote.getId();
+		if (vote.getPoll() != null)
 		this.pollId = vote.getPoll().getId();
+		if (vote.getUser() != null)
 		this.userId = vote.getUser().getId();
+		if (vote.getAnswer() != null)
 		this.answer = vote.getAnswer().toString();
 	}
 

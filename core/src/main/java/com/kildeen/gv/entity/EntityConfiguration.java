@@ -1,13 +1,16 @@
 package com.kildeen.gv.entity;
 
+import static com.google.common.base.MoreObjects.firstNonNull;
+
+import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
-import org.apache.commons.lang3.StringUtils;
-
-import com.kildeen.gv.DomainEntity;
+import com.google.common.base.MoreObjects;
+import com.google.common.base.Strings;
 
 /**
  * Each entity needs to have a configuration listed in
@@ -19,29 +22,31 @@ import com.kildeen.gv.DomainEntity;
  *            The entity to configure
  * 
  */
-public class EntityConfiguration<T extends DomainEntity> {
+public class EntityConfiguration<T> {
 
-	private Class<? extends DomainEntity> clazz;
+	private Class<?> clazz;
 	private boolean solr;
 	private boolean restIn;
 	private boolean restOut;
 	private Class<?> dtoClazz;
 	private Function<Object, Object> dtoMappingFunction;
 	private String tableName;
+	private List<PreviousTableName> tableNames;
+	private String currentTableNameSince;
 
-	public static <T extends DomainEntity> EntityConfiguration<T> create(Class<T> clazz) {
+	private EntityConfiguration() {
+	};
+
+	public static <T> EntityConfiguration<T> create(Class<T> clazz) {
 		EntityConfiguration<T> conf = new EntityConfiguration<T>();
 		conf.clazz = clazz;
-		Entity e = clazz.getAnnotation(Entity.class);
-		if (StringUtils.isEmpty(e.name())) {
-			conf.tableName = clazz.getSimpleName();
-		} else {
-			conf.tableName = e.name();
-		}
+		Table table = clazz.getAnnotation(Table.class);
+		String nameFromTable = table == null ? null : table.name();
+		conf.tableName = firstNonNull(Strings.emptyToNull(nameFromTable), clazz.getSimpleName());
 		return conf;
 	}
 
-	public static <T extends DomainEntity> EntityConfiguration<T> create(Class<T> clazz, Class<?> dtoClazz) {
+	public static <T> EntityConfiguration<T> create(Class<T> clazz, Class<?> dtoClazz) {
 		EntityConfiguration<T> ec = create(clazz);
 		ec.dtoClazz = dtoClazz;
 		return ec;
@@ -59,6 +64,16 @@ public class EntityConfiguration<T extends DomainEntity> {
 
 	EntityConfiguration<T> restOut() {
 		restOut = true;
+		return this;
+	}
+
+	EntityConfiguration<T> previousTableName(PreviousTableName previousTableName) {
+		tableNames.add(previousTableName);
+		return this;
+	}
+
+	EntityConfiguration<T> hadCurrentTableNameSince(String id) {
+		this.currentTableNameSince = id;
 		return this;
 	}
 
@@ -90,6 +105,12 @@ public class EntityConfiguration<T extends DomainEntity> {
 			Objects.requireNonNull(dtoMappingFunction,
 					"dtoMappingFunction must not be null when using rest or solr, make sure object was build correctly");
 		}
+
+		String tableSince = MoreObjects.firstNonNull(currentTableNameSince, "1");
+		if (currentTableNameSince != null) {
+			tableNames.add(new PreviousTableName(tableSince, getTableName()));
+		}
+
 		return this;
 	}
 
@@ -99,6 +120,10 @@ public class EntityConfiguration<T extends DomainEntity> {
 
 	public String getTableName() {
 		return tableName;
+	}
+
+	public String getClassName() {
+		return clazz.getSimpleName();
 	}
 
 }

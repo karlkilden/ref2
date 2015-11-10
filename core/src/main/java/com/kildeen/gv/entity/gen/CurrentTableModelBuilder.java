@@ -17,21 +17,24 @@ import liquibase.change.core.AddPrimaryKeyChange;
 import liquibase.change.core.AddUniqueConstraintChange;
 import liquibase.change.core.CreateIndexChange;
 import liquibase.change.core.CreateSequenceChange;
+import liquibase.change.core.CreateTableChange;
 import liquibase.change.core.DropColumnChange;
 import liquibase.change.core.DropForeignKeyConstraintChange;
 import liquibase.change.core.DropIndexChange;
 import liquibase.change.core.DropNotNullConstraintChange;
 import liquibase.change.core.DropPrimaryKeyChange;
+import liquibase.change.core.DropTableChange;
 import liquibase.change.core.DropUniqueConstraintChange;
 import liquibase.change.core.RenameColumnChange;
+import liquibase.change.core.RenameTableChange;
 
 public class CurrentTableModelBuilder {
 	CurrentTableModelData data = new CurrentTableModelData();
-	CurrentTableModel currentTableModel;
+	CurrentModel currentTableModel;
 	Map<Class<? extends Change>, Function<Change, Boolean>> handlerMap = new HashMap<>();
 	private StringBuilder definitionProblems = new StringBuilder();
 
-	public CurrentTableModelBuilder(CurrentTableModel currentTableModel) {
+	public CurrentTableModelBuilder(CurrentModel currentTableModel) {
 		this.currentTableModel = currentTableModel;
 
 		setupSpecialCases();
@@ -39,6 +42,8 @@ public class CurrentTableModelBuilder {
 	}
 
 	private void setupSpecialCases() {
+		handlerMap.put(CreateTableChange.class, this::createTableChange);
+		handlerMap.put(DropTableChange.class, this::dropTableChange);
 		handlerMap.put(CreateIndexChange.class, this::handleCreateIndex);
 		handlerMap.put(DropIndexChange.class, this::handleDropIndex);
 		handlerMap.put(AddPrimaryKeyChange.class, this::handleAddPrimaryKeyChange);
@@ -52,6 +57,7 @@ public class CurrentTableModelBuilder {
 		handlerMap.put(CreateSequenceChange.class, this::handleCreateSequenceChange);
 
 		handlerMap.put(RenameColumnChange.class, this::handleRenameColumnChange);
+		handlerMap.put(RenameTableChange.class, this::handleRenameTableChange);
 
 		handlerMap.put(DropColumnChange.class, this::handleDropColumnChange);
 
@@ -62,10 +68,35 @@ public class CurrentTableModelBuilder {
 		buildColumns();
 		buildFks();
 		buildPk();
+		buildIndexes();
+		buildTableName();
+		
+		
 		if (definitionProblems.length() > 1) {
-			throw new IllegalStateException("Problem with Entity: " + currentTableModel.toString() + System.lineSeparator()+definitionProblems.toString());
+			throw new IllegalStateException(
+					"Problem with Entity: " + currentTableModel.toString() + System.lineSeparator() + definitionProblems.toString());
 		}
 		return this;
+	}
+
+	private void buildTableName() {
+		if (isUsed(data.getRenameTables())) {
+			
+			data.getCreateTables().get(0).setTableName(data.getRenameTables().get(data.getRenameTables().size()-1).getNewTableName());
+		}
+	}
+
+	private void buildIndexes() {
+		if (isUsed(data.getIndexes()) && isUsed(data.getDropIndexes())) {
+			List<CreateIndexChange> current = new ArrayList<>();
+			Set<String> constraintsToDrop = data.getDropIndexes().stream().map(d -> d.getIndexName()).collect(Collectors.toSet());
+			for (CreateIndexChange k : data.getIndexes()) {
+				if (!constraintsToDrop.contains(k.getIndexName())) {
+					current.add(k);
+				}
+			}
+			data.setIndexes(current);
+		}
 	}
 
 	private void buildPk() {
@@ -80,12 +111,12 @@ public class CurrentTableModelBuilder {
 			data.setPks(current);
 		}
 		if (data.getPks().size() > 1) {
-			addProblem("Cannot have multiple primary keys. Has " + data.getPks().size() +" keys defined.");
+			addProblem("Cannot have multiple primary keys. Has " + data.getPks().size() + " keys defined.");
 		}
 	}
 
 	private void addProblem(String problem) {
-		definitionProblems.append(problem).append(System.lineSeparator());		
+		definitionProblems.append(problem).append(System.lineSeparator());
 	}
 
 	private void buildFks() {
@@ -115,7 +146,16 @@ public class CurrentTableModelBuilder {
 			data.setColumnConfigs(currentCols);
 		}
 	}
+	
+	private boolean dropTableChange(Change change) {
+		data = new CurrentTableModelData();
+		return true;
+	}
 
+	private boolean createTableChange(Change change) {
+		return data.getCreateTables().add((CreateTableChange) change);
+	}
+	
 	private boolean handleRenameColumnChange(Change change) {
 		return data.getRenameColumns().add((RenameColumnChange) change);
 	}
@@ -128,12 +168,12 @@ public class CurrentTableModelBuilder {
 		return data.getDropIndexes().add((DropIndexChange) change);
 	}
 
-	private boolean handleDropUniqueConstraintChange(Change change) {
-		return data.getDropUniques().add((DropUniqueConstraintChange) change);
-	}
-
 	private boolean handleUniqueConstraintChange(Change change) {
 		return data.getUniques().add((AddUniqueConstraintChange) change);
+	}
+
+	private boolean handleDropUniqueConstraintChange(Change change) {
+		return data.getDropUniques().add((DropUniqueConstraintChange) change);
 	}
 
 	private boolean handleForeignKeyConstraintChange(Change change) {
@@ -161,6 +201,11 @@ public class CurrentTableModelBuilder {
 		data.getPks().add((AddPrimaryKeyChange) change);
 		return true;
 	}
+	
+	private boolean handleRenameTableChange(Change change) {
+		data.getRenameTables().add((RenameTableChange) change);
+		return true;
+	}
 
 	private boolean handleDropPrimaryKeyChange(Change change) {
 		data.getDropPks().add((DropPrimaryKeyChange) change);
@@ -176,7 +221,7 @@ public class CurrentTableModelBuilder {
 		data.addColumnConfigs(list);
 	}
 
-	public CurrentTableModelData getData() {
+	public CurrentModelData getData() {
 		return data;
 	}
 

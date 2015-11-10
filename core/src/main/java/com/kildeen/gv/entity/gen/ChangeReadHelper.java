@@ -1,5 +1,6 @@
 package com.kildeen.gv.entity.gen;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.EnumSet;
 import java.util.List;
@@ -21,18 +22,29 @@ public class ChangeReadHelper {
 		return Optional.ofNullable(tableName);
 	}
 
-	private static Object readObject(Change change, String... propertyNames) throws Exception {
+	private static Object readObject(Change change, String... propertyNames)  {
 		for (String s : propertyNames) {
 			Method m = getMethod(change, s);
 
 			if (m != null) {
-				return m.invoke(change, new Object[0]);
+				try {
+					return m.invoke(change, new Object[0]);
+				} catch (IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalArgumentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (InvocationTargetException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 		return null;
 	}
 
-	public static Optional<List<ColumnConfig>> getColumnConfigs(Change change) throws Exception {
+	public static Optional<List<ColumnConfig>> getColumnConfigs(Change change) {
 		@SuppressWarnings("unchecked")
 		List<ColumnConfig> columns = (List<ColumnConfig>) readObject(change, "columns");
 		return Optional.ofNullable(columns);

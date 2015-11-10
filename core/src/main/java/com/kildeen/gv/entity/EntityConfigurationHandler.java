@@ -7,9 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
-import java.util.stream.Collectors;
-
-import liquibase.changelog.ChangeSet;
 
 import org.apache.solr.client.solrj.SolrQuery;
 
@@ -32,10 +29,16 @@ public class EntityConfigurationHandler {
 	private Map<Class<?>, Function<Object, Object>> dtoMapper = new HashMap<>();
 	private Map<String, EntityConfiguration<?>> tableNameToEntity = new HashMap<>();
 	private SolrSearchDefaults solrDefaults = new SolrSearchDefaults(configs);
+	private Map<String, TableNameOwnerHistory> ownerHistory = new HashMap<>();
 
 	private EntityConfigurationHandler() {
 		mapHowToCreateDtos();
 		mapTableNames();
+		mapPreviousTableNameOwners();
+	}
+
+	private void mapPreviousTableNameOwners() {
+		// ownerHistory.put("Vote", ne)
 	}
 
 	public static EntityConfigurationHandler getInstance() {
@@ -77,6 +80,18 @@ public class EntityConfigurationHandler {
 		return configs;
 	}
 
+	public EntityConfiguration<?> getByCurrentOrPreviousTableName(String id, String tableName) {
+
+		TableNameOwnerHistory history = ownerHistory.get(tableName);
+
+		if (history != null) {
+			return history.getOwner(id);
+		}
+
+		return tableNameToEntity.get(tableName);
+	}
+	
+	
 	public EntityConfiguration<?> getByTableName(String tableName) {
 		return tableNameToEntity.get(tableName);
 	}
@@ -86,8 +101,19 @@ public class EntityConfigurationHandler {
 	}
 
 	public EntityConfiguration<?> getByClass(Class<?> clazz) {
-		Optional<EntityConfiguration<?>> conf = configs.stream().filter(ec -> ec.getDefiningClass() == clazz).findFirst();
+		Optional<EntityConfiguration<?>> conf = doFind(clazz);
 		return conf.orElseThrow(() -> new NullPointerException(String.format("%s is not configured", clazz.getName())));
+	}
+
+	private Optional<EntityConfiguration<?>> doFind(Class<?> clazz) {
+		Optional<EntityConfiguration<?>> conf = configs.stream().filter(ec -> ec.getDefiningClass() == clazz).findFirst();
+		return conf;
+	}
+
+	public Object findByClass(Class<?> clazz) {
+		Optional<EntityConfiguration<?>> conf = doFind(clazz);
+		return conf.orElse(null);
+
 	}
 
 }

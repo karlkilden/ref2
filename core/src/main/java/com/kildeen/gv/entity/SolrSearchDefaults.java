@@ -15,16 +15,16 @@ public class SolrSearchDefaults {
 
 	private static final Map<Class<?>, SolrQuery> BASE_QUERIES = setupDefaults();
 
-	SolrSearchDefaults(List<EntityConfiguration<? extends DomainEntity>> configs) {
+	SolrSearchDefaults(List<EntityConfiguration<?>> configs) {
 		verifySolrConfig(configs);
 	}
 
-	private void verifySolrConfig(List<EntityConfiguration<? extends DomainEntity>> configs) {
+	private void verifySolrConfig(List<EntityConfiguration<?>> configs) {
 		configs.stream().filter(ec -> ec.hasSolr()).forEach(ec -> requireBaseQuery(ec));
 
 	}
 
-	private void requireBaseQuery(EntityConfiguration<? extends DomainEntity> ec) {
+	private void requireBaseQuery(EntityConfiguration<?> ec) {
 		Objects.requireNonNull(BASE_QUERIES.get((Object) ec.getDTOClass()), "Missing solr search default for: " + ec.getDefiningClass().getSimpleName());
 	}
 

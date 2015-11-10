@@ -23,15 +23,15 @@ import org.mockito.runners.MockitoJUnitRunner;
 import com.google.common.collect.Lists;
 import com.kildeen.gv.entity.EntityConfiguration;
 import com.kildeen.gv.entity.EntityConfigurationHandler;
-import com.kildeen.gv.entity.gen.ChangeSetBuilder;
+import com.kildeen.gv.entity.gen.TableModelHandler;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ChangeSetBuilderTest {
+public class TableModelHandlerTest {
 
 	@InjectMocks
-	private ChangeSetBuilder changeSetBuilder;
+	private TableModelHandler changeSetBuilder;
 	@Mock
-	LiquibaseHelper liquibaseHelper;
+	LiquibaseReadHelper liquibaseHelper;
 	
 	LiquibaseMock mock = new LiquibaseMock();
 
@@ -40,7 +40,7 @@ public class ChangeSetBuilderTest {
 	public void before() throws Exception {
 
 		changeSetBuilder.clearCache();
-		mock.createIndex("Vote", 0).createTable("Poll", 1).record();
+		mock.createIndex("Vote", "", 0).createTable("Poll", 1).record();
 		when(liquibaseHelper.get()).thenReturn(mock.get());
 	}
 
@@ -48,8 +48,8 @@ public class ChangeSetBuilderTest {
 	public void getChangeLogs_should_return_one_changelog_per_new_entity() throws Exception {
 		DatabaseChangeLog log = mock.get();
 		when(liquibaseHelper.get()).thenReturn(log);
-		changeSetBuilder.mapChange();
-		Map<EntityConfiguration<?>, List<Change>> changeSetsMap = changeSetBuilder.getChangeSets();
+		changeSetBuilder.mapTables();
+		Map<Class<?>, CurrentTableModel> changeSetsMap = changeSetBuilder.mapTables();
 		assertThat(changeSetsMap).hasSize(entityConfigurationHandler.getAll().size());
 
 	}
