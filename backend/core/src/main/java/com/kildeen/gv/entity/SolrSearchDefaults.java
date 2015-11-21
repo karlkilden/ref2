@@ -7,7 +7,6 @@ import java.util.Objects;
 
 import org.apache.solr.client.solrj.SolrQuery;
 
-import com.kildeen.gv.DomainEntity;
 import com.kildeen.gv.poll.PollDTO;
 import com.kildeen.gv.poll.VoteDTO;
 

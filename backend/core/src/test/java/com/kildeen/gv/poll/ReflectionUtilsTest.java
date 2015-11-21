@@ -1,7 +1,5 @@
 package com.kildeen.gv.poll;
 
-import static org.junit.Assert.*;
-
 import java.lang.reflect.Field;
 import java.util.List;
 

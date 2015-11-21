@@ -1,8 +1,6 @@
 package com.kildeen.gv.entity.gen;
 
 import java.util.List;
-import java.util.OptionalDouble;
-
 import liquibase.change.ColumnConfig;
 import liquibase.change.core.AddForeignKeyConstraintChange;
 import liquibase.change.core.AddNotNullConstraintChange;

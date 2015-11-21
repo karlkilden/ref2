@@ -5,7 +5,6 @@ import static com.kildeen.gv.QueryBuilder.query;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -18,7 +17,6 @@ import org.apache.solr.client.solrj.SolrQuery;
 
 import com.kildeen.gv.QueryBuilder;
 import com.kildeen.gv.auth.User;
-import com.kildeen.gv.vote.Poll_;
 
 @Path("/poll")
 @Produces({ "text/xml", "application/json" })

@@ -1,44 +1,7 @@
 package com.kildeen.gv;
 
-import java.io.File;
-import java.sql.Connection;
-import java.util.concurrent.TimeUnit;
-
 import javax.annotation.Resource;
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
 import javax.sql.DataSource;
-import javax.transaction.Status;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import liquibase.Liquibase;
-import liquibase.change.Change;
-import liquibase.change.core.CreateTableChange;
-import liquibase.changelog.ChangeLogParameters;
-import liquibase.changelog.DatabaseChangeLog;
-import liquibase.changelog.visitor.ChangeExecListener;
-import liquibase.changelog.visitor.ChangeLogSyncListener;
-import liquibase.configuration.GlobalConfiguration;
-import liquibase.configuration.LiquibaseConfiguration;
-import liquibase.database.Database;
-import liquibase.database.DatabaseFactory;
-import liquibase.database.jvm.JdbcConnection;
-import liquibase.exception.LiquibaseException;
-import liquibase.parser.ChangeLogParser;
-import liquibase.parser.ChangeLogParserFactory;
-import liquibase.resource.ClassLoaderResourceAccessor;
-import liquibase.resource.CompositeResourceAccessor;
-import liquibase.resource.FileSystemResourceAccessor;
-import liquibase.resource.ResourceAccessor;
-import liquibase.serializer.core.xml.XMLChangeLogSerializer;
-
-import org.apache.activemq.store.kahadb.disk.journal.Journal;
-import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.slf4j.Logger;
-import org.w3c.dom.Document;
-
-import com.google.common.util.concurrent.Uninterruptibles;
 
 public class LiquibaseSetup {
 

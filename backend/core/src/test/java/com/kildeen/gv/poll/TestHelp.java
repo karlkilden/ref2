@@ -15,19 +15,18 @@ import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 
-import com.kildeen.gv.DomainEntity;
 import com.kildeen.gv.PersistenceDecorator;
 import com.kildeen.gv.TheKnowledge;
 import com.kildeen.gv.TheKnowledgeBuilder;
 
-public class TestHelp<E extends DomainEntity> implements TestRule {
+public class TestHelp<E> implements TestRule {
 	@Inject
 	private EntityManager entityManager;
 	@Inject
 	private TransactionHelp transactionHelp;
 	private Class<E> clazz;
 
-	public static <E extends DomainEntity> TestHelp<E> getInstance(Class<E> clazz) {
+	public static <E> TestHelp<E> getInstance(Class<E> clazz) {
 		TestHelp<E> help = new TestHelp<>();
 		help.clazz = clazz;
 		BeanProvider.injectFields(help);
@@ -55,8 +54,8 @@ public class TestHelp<E extends DomainEntity> implements TestRule {
 		return (E) transactionHelp.persist(entity);
 	}
 	
-	public static DomainEntity persistEntity(DomainEntity entity) {
-		return (DomainEntity) BeanProvider.getContextualReference(TransactionHelp.class).persist(entity);
+	public static Object persistEntity(Object entity) {
+		return BeanProvider.getContextualReference(TransactionHelp.class).persist(entity);
 	}
 
 	public void persistAll(Object... entities) {
@@ -79,8 +78,8 @@ public class TestHelp<E extends DomainEntity> implements TestRule {
 		};
 	}
 
-	public TheKnowledge getKnowledge(List<Class<? extends DomainEntity>> entities) {
-		List<Class<? extends DomainEntity>> all = new ArrayList<>(entities);
+	public TheKnowledge getKnowledge(List<Class<?>> entities) {
+		List<Class<?>> all = new ArrayList<>(entities);
 		all.add(clazz);
 
 		return TheKnowledgeBuilder.getInstance().decorator(new PersistenceDecorator()).with(all).build();

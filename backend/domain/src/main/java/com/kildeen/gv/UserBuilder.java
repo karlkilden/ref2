@@ -3,8 +3,6 @@ package com.kildeen.gv;
 import java.util.Objects;
 
 import com.kildeen.gv.auth.User;
-import com.kildeen.gv.vote.AnswerType;
-import com.kildeen.gv.vote.Poll;
 
 public class UserBuilder {
 

@@ -7,20 +7,15 @@ import java.util.List;
 import java.util.Map;
 
 import liquibase.change.Change;
-import liquibase.change.core.CreateTableChange;
-import liquibase.changelog.ChangeSet;
 import liquibase.changelog.DatabaseChangeLog;
 
-import org.apache.openejb.jee.jba.cmp.CreateTable;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import com.google.common.collect.Lists;
 import com.kildeen.gv.entity.EntityConfiguration;
 import com.kildeen.gv.entity.EntityConfigurationHandler;
 import com.kildeen.gv.entity.gen.ChangeSetBuilder;
@@ -40,7 +35,7 @@ public class ChangeSetBuilderTest {
 	public void before() throws Exception {
 
 		changeSetBuilder.clearCache();
-		mock.createIndex("Vote", 0).createTable("Poll", 1).record();
+//		mock.createIndex("Vote", 0).createTable("Poll", 1).record();
 		when(liquibaseHelper.get()).thenReturn(mock.get());
 	}
 

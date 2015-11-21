@@ -1,6 +1,5 @@
 package com.kildeen.gv.entity.gen;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 import org.junit.Before;

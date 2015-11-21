@@ -9,8 +9,6 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.apache.commons.collections4.CollectionUtils;
-import org.eclipse.persistence.internal.jpa.rs.metadata.model.Link;
-
 import com.kildeen.gv.entity.EntityConfiguration;
 import com.kildeen.gv.entity.EntityConfigurationContext;
 

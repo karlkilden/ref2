@@ -1,7 +1,5 @@
 package com.kildeen.gv.entity.gen;
 
-import static org.junit.Assert.*;
-
 import java.util.List;
 
 import org.hjson.JsonValue;
@@ -12,7 +10,6 @@ import org.junit.Test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 
 public class CacheReaderTest {
 

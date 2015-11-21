@@ -4,13 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.function.Function;
-
-import com.google.common.collect.Lists;
-import com.kildeen.gv.auth.User;
-import com.kildeen.gv.vote.Poll;
-import com.kildeen.gv.vote.Vote;
 
 /**
  * A helper class that makes the {@link TheKnowledge} more flexible. This class
@@ -25,46 +18,54 @@ import com.kildeen.gv.vote.Vote;
  */
 public class EntityDecorator {
 
-	@SuppressWarnings("unchecked")
-	protected static final List<Class<? extends DomainEntity>> SUPPORTED_ENTITIES = Lists.newArrayList(Vote.class, Poll.class, User.class);
-
-	protected Map<Class<? extends DomainEntity>, List<Function<? extends DomainEntity, ? extends DomainEntity>>> decorators = new HashMap<>();
+	protected Map<Class<?>, List<DecoratorFunction<?, ?>>> decorators = new HashMap<>();
+	private List<EntityDecoratorExtension> decoratorList = new ArrayList<>();
 
 	EntityDecorator() {
-
-		for (Class<? extends DomainEntity> entityClazz : SUPPORTED_ENTITIES) {
-			decorators.put(entityClazz, new ArrayList<>());
-		}
 
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public void decorate(DomainEntity entity) {
+	public void decorate(Object entity) {
 
-		List<Function<? extends DomainEntity, ? extends DomainEntity>> currentDecorators = decorators.get(entity.getClass());
+		List<DecoratorFunction<?, ?>> currentDecorators = get(entity.getClass());
 
-		for (Function fnc : currentDecorators) {
-			fnc.apply((Object) entity);
+		for (DecoratorFunction fnc : currentDecorators) {
+			fnc.decorate((Object) entity);
 		}
 
 	}
 
-	public void add(Function<? extends DomainEntity, ? extends DomainEntity> fnc,
-			@SuppressWarnings("unchecked") Class<? extends DomainEntity>... entityClazzez) {
-		for (Class<? extends DomainEntity> c : entityClazzez) {
-			decorators.get(c).add(fnc);
+	private List<DecoratorFunction<?, ?>> get(Class<?> entity) {
+		return decorators.computeIfAbsent(entity, k -> new ArrayList<>());
+	}
+
+	public void add(DecoratorFunction<?, ?> fnc, Class<?>... entityClazzez) {
+		for (Class<?> c : entityClazzez) {
+			get(c).add(fnc);
 		}
 	}
 
-	public void add(Function<? extends DomainEntity, ? extends DomainEntity> fnc) {
+	public void add(DecoratorFunction<?, ?> fnc) {
 		decorators.values().forEach(l -> l.add(fnc));
 	}
 
-	public void absorb(EntityDecoratorExtension decorator) {
-		decorator.beforeAbsorb();
-		for (Entry<Class<? extends DomainEntity>, List<Function<? extends DomainEntity, ? extends DomainEntity>>> entry : decorator.decorators.entrySet()) {
-			this.decorators.get(entry.getKey()).addAll(entry.getValue());
+	public void addDecorator(EntityDecoratorExtension decorator, Class<?>[] forEntites) {
+
+		for (Class<?> clazzToDecorate : forEntites) {
+			get(clazzToDecorate).addAll(decorator.registerDecoratorFunctions());
 		}
+		this.decoratorList.add(decorator);
+		decorator.registerDecoratorFunctions();
+	}
+
+	public void runAfterDecorates(TheKnowledge tk) {
+		decoratorList.forEach(d -> d.afterDecorate(tk));
+	}
+
+	public void runBeforeDecorates(EntityDecorator entityDecorator) {
+		decoratorList.forEach(d -> d.beforeDecorate(entityDecorator));
+
 	}
 
 }

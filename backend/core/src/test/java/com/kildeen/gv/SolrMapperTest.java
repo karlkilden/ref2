@@ -15,7 +15,7 @@ import com.kildeen.gv.vote.Poll;
 @RunWith(MockitoJUnitRunner.class)
 public class SolrMapperTest {
 	
-	TheKnowledge tk = TheKnowledgeBuilder.getInstance().with(Poll.class).build();
+	TheKnowledge tk = TheKnowledgeBuilder.getInstance().with(Poll.class).collect().build();
 	
 	@Spy
 	private EntityConfigurationContext entityConfigurationHandler = new EntityConfigurationHandlerMock();
@@ -39,7 +39,7 @@ public class SolrMapperTest {
 	
 	@Test
 	public void polls_should_be_added_as_dtos_to_queue() throws Exception {
-		solrMapper.queue(tk.beverages);
+		solrMapper.queue(tk.perType.get(Poll.class));
 		Mockito.verify(solrPostQueue, Mockito.times(2)).add(Mockito.any()); 
 	}
 

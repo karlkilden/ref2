@@ -24,7 +24,6 @@ import liquibase.change.ConstraintsConfig;
 import liquibase.change.core.AddPrimaryKeyChange;
 import liquibase.change.core.CreateIndexChange;
 import liquibase.change.core.CreateTableChange;
-import liquibase.change.core.RenameColumnChange;
 
 public class CurrentEntityModel implements CurrentModel {
 

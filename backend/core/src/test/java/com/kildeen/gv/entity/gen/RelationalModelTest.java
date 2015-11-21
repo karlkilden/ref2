@@ -1,30 +1,15 @@
 package com.kildeen.gv.entity.gen;
 
-import static org.junit.Assert.*;
-
 import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
-
 import com.kildeen.gv.entity.EntityConfiguration;
 import com.kildeen.gv.entity.gen.TestEntities.*;
 import com.kildeen.gv.vote.Vote;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.junit.Before;
-import org.junit.Test;
-
-import com.kildeen.gv.entity.EntityConfiguration;
-import com.kildeen.gv.entity.EntityConfigurationHandler;
-
-import liquibase.change.Change;
 
 public class RelationalModelTest extends CurrentEntityModelTest {
 

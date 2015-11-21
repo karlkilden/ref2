@@ -7,7 +7,6 @@ import java.util.List;
 
 import liquibase.change.AddColumnConfig;
 import liquibase.change.Change;
-import liquibase.change.ChangeWithColumns;
 import liquibase.change.ColumnConfig;
 import liquibase.change.core.AddColumnChange;
 import liquibase.change.core.AddForeignKeyConstraintChange;
@@ -15,7 +14,6 @@ import liquibase.change.core.AddPrimaryKeyChange;
 import liquibase.change.core.CreateIndexChange;
 import liquibase.change.core.CreateSequenceChange;
 import liquibase.change.core.CreateTableChange;
-import liquibase.change.core.DropAllForeignKeyConstraintsChange;
 import liquibase.change.core.DropColumnChange;
 import liquibase.change.core.DropForeignKeyConstraintChange;
 import liquibase.change.core.DropIndexChange;

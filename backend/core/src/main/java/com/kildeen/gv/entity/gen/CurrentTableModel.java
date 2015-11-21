@@ -8,7 +8,6 @@ import com.kildeen.gv.entity.EntityConfiguration;
 
 import liquibase.change.Change;
 import liquibase.change.ColumnConfig;
-import liquibase.change.core.DropTableChange;
 
 public class CurrentTableModel implements CurrentModel {
 	CurrentTableModelBuilder builder;

@@ -2,9 +2,7 @@ package com.kildeen.gv.entity.gen;
 
 import static com.kildeen.gv.entity.gen.ChangeReadHelper.getTableName;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,9 +12,6 @@ import java.util.Optional;
 import liquibase.change.Change;
 import liquibase.changelog.ChangeSet;
 import liquibase.changelog.DatabaseChangeLog;
-
-import org.apache.xbean.recipe.Option;
-import org.apache.xbean.recipe.ReflectionUtil;
 
 import com.kildeen.gv.entity.EntityConfiguration;
 import com.kildeen.gv.entity.EntityConfigurationHandler;

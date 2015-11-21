@@ -3,8 +3,6 @@ package com.kildeen.gv.entity.gen;
 import java.util.List;
 import java.util.Map;
 
-import org.mockito.Mock;
-
 public class EntityToLiquibaseHandler {
 
 	private TableModelHandler tableModelHandler;

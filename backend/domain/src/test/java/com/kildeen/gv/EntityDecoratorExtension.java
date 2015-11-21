@@ -1,6 +1,14 @@
 package com.kildeen.gv;
 
-public abstract class EntityDecoratorExtension extends EntityDecorator {
+import java.util.List;
 
-	public abstract void beforeAbsorb();
+public abstract class EntityDecoratorExtension {
+
+	public abstract List<DecoratorFunction<?, ?>> registerDecoratorFunctions();
+
+	public void afterDecorate(TheKnowledge tk) {
+	};
+
+	public void beforeDecorate(EntityDecorator decorator) {
+	};
 }

@@ -1,11 +1,6 @@
 package com.kildeen.gv;
 
 import java.io.Serializable;
-import java.util.Objects;
-
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotNull;
 

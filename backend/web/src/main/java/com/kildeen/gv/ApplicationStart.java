@@ -4,18 +4,11 @@ import java.io.Serializable;
 import java.util.logging.Level;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.RequestScoped;
-import javax.enterprise.event.Event;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
 
-import org.apache.deltaspike.cdise.api.ContextControl;
 import org.apache.deltaspike.core.api.lifecycle.Initialized;
-import org.apache.deltaspike.core.util.ProxyUtils;
-import org.slf4j.Logger;
-
-import com.kildeen.gv.poll.PollService;
 
 
 /**

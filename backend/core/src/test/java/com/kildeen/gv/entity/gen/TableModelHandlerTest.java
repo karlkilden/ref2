@@ -3,25 +3,17 @@ package com.kildeen.gv.entity.gen;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
-import java.util.List;
 import java.util.Map;
 
-import liquibase.change.Change;
-import liquibase.change.core.CreateTableChange;
-import liquibase.changelog.ChangeSet;
 import liquibase.changelog.DatabaseChangeLog;
 
-import org.apache.openejb.jee.jba.cmp.CreateTable;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import com.google.common.collect.Lists;
-import com.kildeen.gv.entity.EntityConfiguration;
 import com.kildeen.gv.entity.EntityConfigurationHandler;
 import com.kildeen.gv.entity.gen.TableModelHandler;
 

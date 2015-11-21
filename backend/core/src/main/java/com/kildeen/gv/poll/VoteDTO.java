@@ -1,7 +1,5 @@
 package com.kildeen.gv.poll;
 
-import javax.persistence.Entity;
-
 import org.apache.solr.client.solrj.beans.Field;
 
 import com.kildeen.gv.vote.Vote;

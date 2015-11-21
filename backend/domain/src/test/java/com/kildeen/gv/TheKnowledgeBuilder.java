@@ -1,18 +1,11 @@
 package com.kildeen.gv;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.function.Supplier;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.RandomUtils;
-
-import com.google.common.collect.Lists;
 import com.kildeen.gv.auth.User;
 import com.kildeen.gv.vote.AnswerType;
 import com.kildeen.gv.vote.Poll;
@@ -22,14 +15,14 @@ public class TheKnowledgeBuilder {
 
 	EntityDecorator entityDecorator = new EntityDecorator();
 
-	Map<Class<? extends DomainEntity>, List<Class<? extends DomainEntity>>> prerequisites = new HashMap<>();
-	Map<Class<? extends DomainEntity>, Supplier<Boolean>> entityInitMethods = new HashMap<>();
+	Map<Class<?>, List<Class<?>>> prerequisites = new HashMap<>();
+	Map<Class<?>, Supplier<Boolean>> entityInitMethods = new HashMap<>();
 
 	private TheKnowledge theKnowledge = new TheKnowledge();
 
-	private List<Class<? extends DomainEntity>> generateIdsFor;
+	private List<Class<?>> activatedEntities;
 
-	private List<Class<? extends DomainEntity>> activatedEntities;
+	private List<Class<?>> classesToInit;
 
 	/**
 	 * This is a key part. This constructor directly tracks the entity
@@ -43,9 +36,9 @@ public class TheKnowledgeBuilder {
 	}
 
 	@SafeVarargs
-	private final void setupEntity(Class<? extends DomainEntity> key, Supplier<Boolean> setupMethod, Class<? extends DomainEntity>... currenPrerequisites) {
-		List<Class<? extends DomainEntity>> fullPrerequisites = new ArrayList<>();
-		for (Class<? extends DomainEntity> clazz : currenPrerequisites) {
+	private final void setupEntity(Class<?> key, Supplier<Boolean> setupMethod, Class<?>... currenPrerequisites) {
+		List<Class<?>> fullPrerequisites = new ArrayList<>();
+		for (Class<?> clazz : currenPrerequisites) {
 			fullPrerequisites.add(clazz);
 		}
 		prerequisites.put(key, fullPrerequisites);
@@ -56,29 +49,22 @@ public class TheKnowledgeBuilder {
 	private boolean polls() {
 		theKnowledge.beer = (Poll) decorate(PollBuilder.getInstance().name("beer").build());
 		theKnowledge.milk = (Poll) decorate(PollBuilder.getInstance().name("food").build());
-		theKnowledge.beverages = Lists.newArrayList(theKnowledge.beer, theKnowledge.milk);
-		theKnowledge.polls = new ArrayList<>();
-		theKnowledge.polls.addAll(theKnowledge.beverages);
 		return false;
 	}
 
 	private DomainEntity decorate(DomainEntity build) {
-		 entityDecorator.decorate(build);
-		 return build;
+		entityDecorator.decorate(build);
+		return build;
 	}
 
 	private boolean users() {
 		theKnowledge.kk = (User) decorate(UserBuilder.getInstance().name("kalle").build());
-		theKnowledge.users = Lists.newArrayList(theKnowledge.kk);
 		return false;
 	}
 
 	private boolean votes() {
-		theKnowledge.beerYes = (Vote) decorate(VoteBuilder.getInstance().poll(theKnowledge.beer).answer(AnswerType.YES)
-				.addPoints().user(theKnowledge.kk).build());
-		theKnowledge.beverageVotes = Lists.newArrayList(theKnowledge.beerYes);
-		theKnowledge.votes = new ArrayList<>();
-		theKnowledge.votes.addAll(theKnowledge.beverageVotes);
+		theKnowledge.beerYes = (Vote) decorate(
+				VoteBuilder.getInstance().poll(theKnowledge.beer).answer(AnswerType.YES).addPoints().user(theKnowledge.kk).build());
 
 		return false;
 	}
@@ -88,9 +74,13 @@ public class TheKnowledgeBuilder {
 	}
 
 	public TheKnowledgeBuilder decorator(EntityDecoratorExtension decorator) {
-		this.entityDecorator.absorb(decorator);
+		decorator(decorator, classesToInit.toArray(new Class[0]));
 		return this;
-
+	}
+	
+	public TheKnowledgeBuilder decorator(EntityDecoratorExtension decorator, Class<?>... forEntites) {
+		this.entityDecorator.addDecorator(decorator, forEntites);
+		return this;
 	}
 
 	/**
@@ -101,17 +91,14 @@ public class TheKnowledgeBuilder {
 	 *            that the test requires
 	 * 
 	 */
-	public TheKnowledgeBuilder with(List<Class<? extends DomainEntity>> entities) {
+	public TheKnowledgeBuilder with(List<Class<?>> entities) {
 		this.activatedEntities = entities;
+		buildClassToInit();
 		return this;
 	}
 
 	private void setup() {
-		Set<Class<? extends DomainEntity>> alreadyInitiated = new HashSet<>();
-		for (Class<? extends DomainEntity> s : activatedEntities) {
-			List<Class<? extends DomainEntity>> pre = prerequisites.get(s);
-			pre.stream().filter(c -> !alreadyInitiated.contains(c)).forEach(c -> entityInitMethods.get(c).get());
-		}
+		classesToInit.forEach(c -> entityInitMethods.get(c).get());
 	}
 
 	/**
@@ -123,59 +110,55 @@ public class TheKnowledgeBuilder {
 	 * 
 	 */
 	@SafeVarargs
-	public final TheKnowledgeBuilder with(Class<? extends DomainEntity>... entities) {
+	public final TheKnowledgeBuilder with(Class<?>... entities) {
 
-		List<Class<? extends DomainEntity>> all = new ArrayList<>();
+		List<Class<?>> all = new ArrayList<>();
 
-		for (Class<? extends DomainEntity> clazz : entities) {
+		for (Class<?> clazz : entities) {
 			all.add(clazz);
 		}
 		return with(all);
 
 	}
 
-	public TheKnowledgeBuilder generateIds(List<Class<? extends DomainEntity>> entities) {
-		this.generateIdsFor = entities;
+	public TheKnowledgeBuilder generateIds(List<Class<?>> entities) {
+		generateIds(entities.toArray(new Class[0]));
+		return this;
+	}
+
+	public TheKnowledgeBuilder generateIds() {
+		generateIds(activatedEntities);
 		return this;
 	}
 
 	@SafeVarargs
-	public final TheKnowledgeBuilder generateIds(Class<? extends DomainEntity>... entities) {
-		return generateIds(Arrays.asList(entities));
-	}
-
-	public TheKnowledge build() {
-		setup();
-		theKnowledge.entities = new ArrayList<>();
-		addEntities(theKnowledge.polls);
-		addEntities(theKnowledge.votes);
-		addEntities(theKnowledge.users);
-
-		if (activated(generateIdsFor)) {
-			doGenerateIds();
-		}
-		return theKnowledge;
-	}
-
-	private boolean activated(List<Class<? extends DomainEntity>> entites) {
-		return entites != null;
-	}
-
-	public TheKnowledgeBuilder generateIds() {
-		generateIdsFor = Lists.newArrayList(activatedEntities);
+	public final TheKnowledgeBuilder generateIds(Class<?>... entities) {
+		decorator(new GenerateIdsDecorator(entities));
 		return this;
 	}
 
-	private void doGenerateIds() {
-		for (DomainEntity e : theKnowledge.entities) {
-			e.setId(RandomUtils.nextLong(1, 99999999));
+	public TheKnowledge build() {
+		entityDecorator.runBeforeDecorates(entityDecorator);
+		setup();
+		entityDecorator.runAfterDecorates(theKnowledge);
+		return theKnowledge;
+	}
+
+	private void buildClassToInit() {
+		classesToInit = new ArrayList<>();
+		for (Class<?> s : activatedEntities) {
+			List<Class<?>> pre = prerequisites.get(s);
+			for (Class<?> entityClazz : pre) {
+				if (!classesToInit.contains(entityClazz)) {
+					classesToInit.add(entityClazz);
+				}
+			}
 		}
 	}
 
-	private void addEntities(List<? extends DomainEntity> entities) {
-		if (entities != null) {
-			theKnowledge.entities.addAll(entities);
-		}
+	public TheKnowledgeBuilder collect() {
+		decorator(new EntityCollectorDecorator());
+		return this;
 	}
 
 }
