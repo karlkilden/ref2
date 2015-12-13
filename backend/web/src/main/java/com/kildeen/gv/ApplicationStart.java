@@ -12,9 +12,7 @@ import org.apache.deltaspike.core.api.lifecycle.Initialized;
 import org.apache.deltaspike.core.api.provider.BeanProvider;
 
 import com.kildeen.gv.jobs.JobMaster;
-import com.kildeen.gv.jobs.JobRegistration;
 import com.kildeen.gv.jobs.JobStarter;
-import com.kildeen.gv.modular.FeatureControl;
 import com.kildeen.gv.poll.AsyncStartup;
 
 

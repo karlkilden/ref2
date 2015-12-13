@@ -1,11 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.kildeen</groupId>
-	<artifactId>ref2</artifactId>
+	<artifactId>wis</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-	<name>ref2</name>
+	<name>wis</name>
 
 	<modules>
 		<module>domain</module>
@@ -88,20 +88,20 @@
 		<dependencies>
 			<dependency>
 				<groupId>com.kildeen</groupId>
-				<artifactId>ref2-domain</artifactId>
+				<artifactId>wis-domain</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>com.kildeen</groupId>
-				<artifactId>ref2-domain</artifactId>
+				<artifactId>wis-domain</artifactId>
 				<version>${project.version}</version>
 				<type>test-jar</type>
 			</dependency>
 
 			<dependency>
 				<groupId>com.kildeen</groupId>
-				<artifactId>ref2-core</artifactId>
+				<artifactId>wis-core</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 

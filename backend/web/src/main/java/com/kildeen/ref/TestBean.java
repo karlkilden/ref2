@@ -9,7 +9,7 @@ import javax.faces.view.ViewScoped;
 import org.omnifaces.util.Faces;
 
 @ViewScoped
-@State
+
 public class TestBean implements Serializable {
 
 	private String test;
@@ -23,7 +23,6 @@ public class TestBean implements Serializable {
 		this.test = test;
 	}
 	
-	@State
 	public void testSave() {
 	System.out.println("keso");	
 	}

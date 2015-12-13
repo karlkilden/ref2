@@ -6,7 +6,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import com.kildeen.gv.Service;
+import com.kildeen.gv.ee.Service;
 
 @Service
 public class CategoryService {

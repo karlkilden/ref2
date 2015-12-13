@@ -10,7 +10,7 @@ import liquibase.resource.FileSystemResourceAccessor;
 import liquibase.resource.ResourceAccessor;
 
 public class LiquibaseHelper {
-	private static final String FILE_LOCATION = "C:/kalle/ref2/domain/src/main/resources/liquibase/liqui.xml";
+	private static final String FILE_LOCATION = "C:/kalle/wis/domain/src/main/resources/liquibase/liqui.xml";
 	DatabaseChangeLog databaseChangeLog;
 
 	public DatabaseChangeLog get() throws Exception {

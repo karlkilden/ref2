@@ -2,15 +2,11 @@ package com.kildeen.gv.entity.gen.process;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import com.kildeen.gv.entity.gen.CurrentEntityModel;
-import com.kildeen.gv.entity.gen.CurrentModelData;
-import com.kildeen.gv.entity.gen.CurrentTableModel;
 import com.kildeen.gv.entity.gen.DiffHandler;
 import com.kildeen.gv.entity.gen.EntityModelHandler;
-import com.kildeen.gv.entity.gen.SchemaWriteHandler;
 import com.kildeen.gv.entity.gen.LiquibaseReadHelper;
+import com.kildeen.gv.entity.gen.SchemaWriteHandler;
 import com.kildeen.gv.entity.gen.TableModelHandler;
 
 public class EntityToLiquibaseHandler {

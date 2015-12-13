@@ -1,4 +1,4 @@
-package com.kildeen.gv;
+package com.kildeen.gv.ee;
 
 import javax.enterprise.inject.Produces;
 import javax.persistence.EntityManager;

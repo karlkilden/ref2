@@ -1,17 +1,11 @@
 package com.kildeen.ref.fact;
-
 import static java.lang.String.valueOf;
 import static java.util.stream.IntStream.iterate;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
-
 import org.apache.http.message.BasicNameValuePair;
-
-import com.kildeen.ref.BooleanParam;
 import com.kildeen.ref.JsfRequestContext;
 
 @Model
@@ -24,10 +18,6 @@ public class CategoryBean {
 
 	@Inject
 	private JsfRequestContext jsfRequestContext;
-
-	@Inject
-	@BooleanParam
-	private Boolean morePages;
 
 	private List<Category> latestCategories;
 
@@ -45,10 +35,9 @@ public class CategoryBean {
 	public void morePages() {
 		BasicNameValuePair pageParam = jsfRequestContext.incrementAndGetPage();
 		setup();
-		morePages = true;
 		long pageCount = categoryService.countPages(MAX_PAGES);
 
-		jsfRequestContext.addParams(new BasicNameValuePair("morePages", String.valueOf(morePages)), new BasicNameValuePair("pageCount",
+		jsfRequestContext.addParams(new BasicNameValuePair("morePages", String.valueOf("")), new BasicNameValuePair("pageCount",
 				valueOf(pageCount)), pageParam);
 
 		setPages(new ArrayList<>());
@@ -58,9 +47,6 @@ public class CategoryBean {
 
 	public void setup() {
 		latestCategories = categoryService.fetchLatestCategories(page, MAX_PAGES);
-		if (morePages) {
-			morePages();
-		}
 	}
 
 	public List<Category> getLatestCategories() {
@@ -84,7 +70,7 @@ public class CategoryBean {
 	}
 
 	public boolean isMorePages() {
-		return morePages;
+		return true;
 	}
 
 	public List<Integer> getPages() {

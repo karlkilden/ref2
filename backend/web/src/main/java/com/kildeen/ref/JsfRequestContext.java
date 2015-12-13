@@ -21,9 +21,6 @@ import org.omnifaces.util.FacesLocal;
 public class JsfRequestContext {
 
 	@Inject
-	private RequestParamAppender requestParamAppender;
-
-	@Inject
 	private FacesContext facesContext;
 
 	@Inject
@@ -64,7 +61,6 @@ public class JsfRequestContext {
 
 	public void addParams(List<NameValuePair> params) {
 		String viewId = getViewId().substring(0, getViewId().indexOf("."));
-		requestParamAppender.append(FacesLocal.getRequest(facesContext).getContextPath() + viewId, params);
 	}
 
 	public String getViewId() {

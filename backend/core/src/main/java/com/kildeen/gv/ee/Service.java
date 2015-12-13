@@ -1,19 +1,17 @@
-package com.kildeen.ref;
+package com.kildeen.gv.ee;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Stereotype;
-import javax.inject.Named;
-import javax.interceptor.InterceptorBinding;
+import javax.transaction.Transactional;
 
-@Named
+@ApplicationScoped
+@Transactional
 @Stereotype
-@Target(value = {ElementType.TYPE, ElementType.METHOD})
+@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@InterceptorBinding
-public @interface State {
-
-}
+public @interface Service {}

@@ -1,7 +1,5 @@
 package com.kildeen.gv.modular;
 
-import java.util.List;
-
 public class FeatureControl {
 	
 	private boolean solr = true;

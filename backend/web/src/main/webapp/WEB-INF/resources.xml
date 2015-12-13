@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<Resource id="ref2" type="DataSource">
+	<Resource id="wis" type="DataSource">
 
 		<!--#PostgresSQL -->
 		JdbcDriver org.postgresql.Driver

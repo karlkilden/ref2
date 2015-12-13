@@ -3,11 +3,11 @@
 	<parent>
 		<groupId>com.kildeen</groupId>
 		<version>1.0-SNAPSHOT</version>
-		<artifactId>ref2</artifactId>
+		<artifactId>wis</artifactId>
 	</parent>
-	<artifactId>ref2-core</artifactId>
+	<artifactId>wis-core</artifactId>
 	<packaging>jar</packaging>
-	<name>ref2 core</name>
+	<name>wis core</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
@@ -19,12 +19,12 @@
 
 		<dependency>
 			<groupId>com.kildeen</groupId>
-			<artifactId>ref2-domain</artifactId>
+			<artifactId>wis-domain</artifactId>
 		</dependency>
 
 		<dependency>
 			<groupId>com.kildeen</groupId>
-			<artifactId>ref2-domain</artifactId>
+			<artifactId>wis-domain</artifactId>
 			<type>test-jar</type>
 			<scope>test</scope>
 		</dependency>

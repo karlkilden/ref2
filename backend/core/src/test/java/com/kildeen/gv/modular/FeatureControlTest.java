@@ -1,8 +1,5 @@
 package com.kildeen.gv.modular;
 
-import static org.junit.Assert.*;
-
-import org.assertj.core.util.Lists;
 import org.hjson.JsonValue;
 import org.hjson.Stringify;
 import org.junit.Before;

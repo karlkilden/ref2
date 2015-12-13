@@ -2,8 +2,8 @@ package com.kildeen.gv.poll;
 
 import javax.inject.Inject;
 
-import com.kildeen.gv.Service;
 import com.kildeen.gv.auth.User;
+import com.kildeen.gv.ee.Service;
 
 @Service
 public class UserService {

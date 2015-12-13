@@ -11,7 +11,7 @@ public class LiquibaseSetup {
 
 	private static final String[] FILES = new String[] { "liquibase_2015v", "liquibase_2015h", "liquibase_2016" };
 
-	@Resource(name = "ref2")
+	@Resource(name = "wis")
 	private DataSource dataSource;
 
 	public void executeChanges() throws Exception {
@@ -40,7 +40,7 @@ public class LiquibaseSetup {
 //
 //			XMLChangeLogSerializer serializer = new XMLChangeLogSerializer();
 //
-//			serializer.append(databaseChangeLog.getChangeSets().get(0), new File("C:/kalle/ref2/domain/src/main/resources/liquibase/liqui.xml"));
+//			serializer.append(databaseChangeLog.getChangeSets().get(0), new File("C:/kalle/wis/domain/src/main/resources/liquibase/liqui.xml"));
 //			databaseChangeLog.getChangeSets().get(0).getChanges().get(0).getClass().isAssignableFrom(CreateTableChange.class);
 //			database.close();
 //

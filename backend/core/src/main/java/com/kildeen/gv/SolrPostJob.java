@@ -18,7 +18,6 @@ import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 
 import com.kildeen.gv.jobs.GlobalJobState;
-import com.kildeen.gv.jobs.JobMaster;
 import com.kildeen.gv.jobs.JobStarter;
 import com.kildeen.gv.jobs.JobState;
 

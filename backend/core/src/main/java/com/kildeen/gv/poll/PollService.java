@@ -7,9 +7,9 @@ import javax.inject.Inject;
 import org.apache.deltaspike.data.api.QueryResult;
 import org.apache.solr.client.solrj.SolrQuery;
 
-import com.kildeen.gv.Service;
 import com.kildeen.gv.SolrDAO;
 import com.kildeen.gv.SolrResult;
+import com.kildeen.gv.ee.Service;
 import com.kildeen.gv.vote.Poll;
 
 @Service

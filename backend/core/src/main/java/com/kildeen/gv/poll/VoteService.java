@@ -6,9 +6,9 @@ import javax.inject.Inject;
 
 import org.apache.solr.client.solrj.SolrQuery;
 
-import com.kildeen.gv.Service;
 import com.kildeen.gv.SolrDAO;
 import com.kildeen.gv.SolrResult;
+import com.kildeen.gv.ee.Service;
 import com.kildeen.gv.vote.AnswerType;
 import com.kildeen.gv.vote.Poll;
 import com.kildeen.gv.vote.Vote;

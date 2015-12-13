@@ -4,12 +4,12 @@
 	<parent>
 		<groupId>com.kildeen</groupId>
 		<version>1.0-SNAPSHOT</version>
-		<artifactId>ref2</artifactId>
+		<artifactId>wis</artifactId>
 	</parent>
 
-	<artifactId>ref2-web</artifactId>
+	<artifactId>wis-web</artifactId>
 	<packaging>war</packaging>
-	<name>ref2 web</name>
+	<name>wis web</name>
 
 	<properties>
 		<project.theme.name>default</project.theme.name>
@@ -26,11 +26,8 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.kildeen</groupId>
-			<artifactId>ref2-core</artifactId>
+			<artifactId>wis-core</artifactId>
 		</dependency>
-
-		<!-- <dependency> <groupId>com.kildeen</groupId> <artifactId>ref2-domain</artifactId> 
-			<type>test-jar</type> <scope>test</scope> </dependency> -->
 
 		<dependency>
 			<groupId>org.apache.myfaces.core</groupId>

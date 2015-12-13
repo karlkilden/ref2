@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
 
-import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import com.google.common.base.MoreObjects;
