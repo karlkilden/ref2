@@ -17,23 +17,24 @@
 	<properties>
 
 		<!-- Core ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+		<log4j.version>2.4.1</log4j.version>
 
-		<ds.version>1.4.0</ds.version>
-		<tomee.version>1.7.1</tomee.version>
-		<eclipselink.version>2.6.0-M3</eclipselink.version>
+		<ds.version>1.5.1</ds.version>
+		<tomee.version>1.7.2</tomee.version>
+		<eclipselink.version>2.6.1</eclipselink.version>
 		<batchee.version>0.2-incubating</batchee.version>
-		<solrj.version>5.2.1</solrj.version>
+		<solrj.version>5.3.1</solrj.version>
 		<bval.version>0.5</bval.version>
 		<jbatch-api.version>1.0</jbatch-api.version>
-		<liquibase.version>3.4.0</liquibase.version>
+		<liquibase.version>3.4.1</liquibase.version>
 
 
 
 		<!-- Web ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-		<myfaces.version>2.2.7</myfaces.version>
+		<myfaces.version>2.2.8</myfaces.version>
 		<primefaces.version>5.1.RC1</primefaces.version>
 		<primefaces.themes.version>1.0.10</primefaces.themes.version>
-		<omnifaces.version>2.0</omnifaces.version>
+		<omnifaces.version>2.2-RC2</omnifaces.version>
 		<font-awesome.version>4.2.0</font-awesome.version>
 		<history-js.version>1.8.0</history-js.version>
 		<jquery-lazyload.version>1.9.3</jquery-lazyload.version>
@@ -202,7 +203,7 @@
 			<version>2.3</version>
 			<scope>runtime</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-all</artifactId>
@@ -237,6 +238,15 @@
 			<version>${openejb.version}</version>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<version>3.2.0</version>
+			<scope>test</scope>
+
+		</dependency>
+
 
 	</dependencies>
 
@@ -378,8 +388,7 @@
 				</configuration>
 				<version>2.7</version>
 			</plugin>
-			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-javadoc-plugin</artifactId> <configuration> <minmemory>128m</minmemory> 
-				<maxmemory>256m</maxmemory> </configuration> </plugin> -->
+			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-javadoc-plugin</artifactId> <configuration> <minmemory>128m</minmemory> <maxmemory>256m</maxmemory> </configuration> </plugin> -->
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

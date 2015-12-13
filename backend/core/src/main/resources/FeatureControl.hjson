@@ -1,0 +1,5 @@
+{
+  solr: true
+  liquibase: true
+  jobs: true
+}

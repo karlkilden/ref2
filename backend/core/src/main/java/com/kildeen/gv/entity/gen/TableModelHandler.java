@@ -15,8 +15,10 @@ import liquibase.changelog.DatabaseChangeLog;
 
 import com.kildeen.gv.entity.EntityConfiguration;
 import com.kildeen.gv.entity.EntityConfigurationHandler;
+import com.kildeen.gv.entity.gen.process.EntityToLiquibaseProcessor;
+import com.kildeen.gv.entity.gen.process.ProcessChain;
 
-public class TableModelHandler {
+public class TableModelHandler implements EntityToLiquibaseProcessor {
 
 	private EntityConfigurationHandler handler = EntityConfigurationHandler.getInstance();
 	private DatabaseChangeLog lbChangeLog;
@@ -26,6 +28,11 @@ public class TableModelHandler {
 	public TableModelHandler(LiquibaseReadHelper liquibaseHelper) {
 		this.liquibaseHelper = liquibaseHelper;
 
+	}
+
+	@Override
+	public void process(ProcessChain chain) {
+		chain.setMappedTables(mapTables());
 	}
 
 	public Map<Class<?>, CurrentTableModel> mapTables() {

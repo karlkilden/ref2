@@ -46,7 +46,7 @@ public class QueryResultBean implements Serializable {
 		}
 
 		this.entities = queryResult.getResultList();
-		this.pageCache = new LRUMap<Integer, List<?>>(pagesToCache);
+		this.pageCache = new LRUMap<>(pagesToCache);
 		if (preload) {
 			this.queryResultPreLoader.preLoad(queryResult, pageCache, page+1);
 		}

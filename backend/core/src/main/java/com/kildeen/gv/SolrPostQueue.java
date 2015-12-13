@@ -5,7 +5,6 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 
 import javax.ejb.Lock;
 import javax.ejb.LockType;
-import javax.ejb.Schedule;
 import javax.ejb.Singleton;
 import javax.inject.Inject;
 
@@ -18,9 +17,8 @@ public class SolrPostQueue {
 	@SuppressWarnings("rawtypes")
 	private Queue dtos = new ConcurrentLinkedDeque<>();
 
-	@Schedule(hour = "*", minute = "*", second = "*/2")
 	@Lock(LockType.WRITE)
-	public void writeJournalMessages() {
+	public void post() {
 		Queue<?> postCopy;
 		postCopy = dtos;
 		dtos = new ConcurrentLinkedDeque<>();

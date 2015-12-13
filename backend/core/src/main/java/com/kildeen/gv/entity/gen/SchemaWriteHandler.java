@@ -1,21 +1,24 @@
 package com.kildeen.gv.entity.gen;
 
-import java.util.Map;
+import java.util.List;
 
 import com.kildeen.gv.entity.gen.process.EntityToLiquibaseProcessor;
 import com.kildeen.gv.entity.gen.process.ProcessChain;
 
-public class EntityModelHandler implements EntityToLiquibaseProcessor {
+public class SchemaWriteHandler implements EntityToLiquibaseProcessor {
 
-	public Map<Class<?>, CurrentEntityModel> mapEntities() {
-		return null;
+
+	public void writeDiff(List<CurrentModelData> diffResult) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void process(ProcessChain chain) {
-		chain.setMappedEntities(mapEntities());		
+
+		writeDiff(chain.getDiffResult());
 	}
+
+
 
 }

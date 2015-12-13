@@ -10,6 +10,7 @@ import org.mockito.*;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import com.kildeen.gv.entity.EntityConfigurationHandler;
+import com.kildeen.gv.poll.AsyncStartup;
 import com.kildeen.gv.poll.PollService;
 import com.kildeen.gv.poll.VoteService;
 

@@ -1,4 +1,4 @@
-package com.kildeen.gv.entity.gen;
+package com.kildeen.gv.entity.gen.process;
 
 import static org.mockito.Mockito.*;
 
@@ -9,6 +9,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import com.kildeen.gv.entity.gen.DiffHandler;
+import com.kildeen.gv.entity.gen.EntityModelHandler;
+import com.kildeen.gv.entity.gen.SchemaWriteHandler;
+import com.kildeen.gv.entity.gen.TableModelHandler;
+
+import com.kildeen.gv.entity.gen.process.EntityToLiquibaseHandler;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EntityToLiquibaseHandlerTest {
@@ -27,7 +34,7 @@ public class EntityToLiquibaseHandlerTest {
 	private DiffHandler diffHandler;
 
 	@Mock
-	private LiquibaseChangeSetWriter liquibaseChangeSetWriter;
+	private SchemaWriteHandler liquibaseChangeSetWriter;
 
 	@InjectMocks
 	private EntityToLiquibaseHandler entityToLiquibaseHandler;
