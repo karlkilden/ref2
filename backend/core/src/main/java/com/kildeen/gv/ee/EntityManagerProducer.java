@@ -4,7 +4,7 @@ import javax.enterprise.inject.Produces;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import com.kildeen.gv.auth.App;
+import com.kildeen.gv.conf.App;
 
 
 public class EntityManagerProducer {

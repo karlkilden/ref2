@@ -4,7 +4,7 @@ import javax.ejb.Asynchronous;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import com.kildeen.gv.SolrMapper;
+import com.kildeen.gv.search.SolrMapper;
 
 @Stateless
 @Asynchronous

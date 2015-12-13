@@ -1,6 +1,6 @@
 package com.kildeen.gv.poll;
 
-import static com.kildeen.gv.QueryBuilder.query;
+import static com.kildeen.gv.search.QueryBuilder.query;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,8 +15,8 @@ import javax.ws.rs.QueryParam;
 
 import org.apache.solr.client.solrj.SolrQuery;
 
-import com.kildeen.gv.QueryBuilder;
 import com.kildeen.gv.auth.User;
+import com.kildeen.gv.search.QueryBuilder;
 
 @Path("/poll")
 @Produces({ "text/xml", "application/json" })

@@ -1,6 +1,6 @@
 package com.kildeen.gv.poll;
 
-import static com.kildeen.gv.QueryBuilder.query;
+import static com.kildeen.gv.search.QueryBuilder.query;
 
 import java.util.List;
 import javax.inject.Inject;

@@ -15,7 +15,6 @@ import com.kildeen.gv.jobs.JobMaster;
 import com.kildeen.gv.jobs.JobStarter;
 import com.kildeen.gv.poll.AsyncStartup;
 
-
 /**
  * 
  * @author: Karl Kilden
@@ -25,16 +24,11 @@ public class ApplicationStart implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-
 	@Inject
 	private AsyncStartup asyncPollService;
-	
-	@Inject
-	private LiquibaseSetup liquibase;
-	
+
 	@Inject
 	private JobMaster jobMaster;
-
 
 	private java.util.logging.Logger logger;
 
@@ -43,10 +37,9 @@ public class ApplicationStart implements Serializable {
 		for (JobStarter jobStarter : BeanProvider.getContextualReferences(JobStarter.class, false)) {
 			jobStarter.schedule();
 		}
-		
+
 		asyncPollService.postAll();
 		try {
-			liquibase.executeChanges();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -58,6 +51,5 @@ public class ApplicationStart implements Serializable {
 		logger = java.util.logging.Logger.getLogger("org.apache.geronimo.connector.work.WorkerContext");
 		logger.setLevel(Level.WARNING);
 	}
-
 
 }

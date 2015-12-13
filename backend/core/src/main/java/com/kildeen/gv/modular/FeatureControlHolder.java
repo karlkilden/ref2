@@ -6,7 +6,7 @@ import java.nio.file.Paths;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.kildeen.gv.hjson.HjsonReader;
+import com.kildeen.gv.conf.HjsonReader;
 
 public class FeatureControlHolder {
 

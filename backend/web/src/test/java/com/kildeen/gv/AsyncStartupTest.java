@@ -13,6 +13,7 @@ import com.kildeen.gv.entity.EntityConfigurationHandler;
 import com.kildeen.gv.poll.AsyncStartup;
 import com.kildeen.gv.poll.PollService;
 import com.kildeen.gv.poll.VoteService;
+import com.kildeen.gv.search.SolrMapper;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AsyncStartupTest {
